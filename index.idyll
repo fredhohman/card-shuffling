@@ -1,0 +1,103 @@
+[meta title:"Cards" description:"Short description of your project" /]
+
+[Header
+  title:"Shuffling Cards, Mathematically"
+  subtitle:"How many single card shuffles does it take to produce a randomly ordered deck of cards?"
+  author:"Fred Hohman"
+  authorLink:"http://fredhohman.com" /]
+
+Most people have seen someone shuffle a deck of cards.
+Sometimes you split a deck in half and switch halves.
+Sometimes you smoosh them all around on a table until they are mixed up.
+But many people shuffle using a *riffle*:
+
+[image style:`{width: '100%'}` src:"static/images/riffle.gif" /]
+
+Here's a question for you: *How many times do you have to riffle a deck of cards before it is completely shuffled?*
+
+[br/]
+
+Luckily, mathematics has you covered. 
+[a href:"https://projecteuclid.org/download/pdf_1/euclid.aoap/1177005705"]It's seven.[/a]
+Riffle seven times and you will have a completely random ordering of cards, one that likely has never been the same before.
+
+I found this result from a 2015 Numberphile video, in which a number of interesting card shuffling facts are presented. 
+However, one caught my attention.
+Instead of riffling with two halves of the deck, what if you were to only riffle *1 card at a time?*
+That is, using a standard 52 card deck, in one hand hold 51 cards and in the other hold the remaining single card.
+Now riffle these together.
+This is equivalent to just taking one card and placing it at random inside of the deck.
+So here's the question:
+
+*How many single riffles do you have to do in order to have a completely shuffled deck?*
+
+## Proof
+You could simulate this in a short program, but instead we can solve it exactly using math.
+Consider an order deck of cards, that is, A, 2, 3, 4, etc. and each suite is stacked on top of one another.
+Without loss of generality, let's say the bottom suit is Diamonds.
+So the bottom card of our deck is the King of Diamonds ([KingOfDiamonds /]).
+Now do the following iteration:
+
+* Take the top card of the deck, the Ace of another suite besides Diamonds, and randomly place it anywhere inside the deck
+
+We now have placed our orignal top card somehwere in the deck, so our new top card is the 2 of some suit besides Diamonds.
+Continue this procedure of taking the top card and randomly placing somewhere else in the deck.
+Eventually, you'll move the top card to the very bottom of the deck, which means our [KingOfDiamonds /] is now the 51st card in the deck from the top.
+Since for every top card you place has a [Equation]\frac{1}{52}[/Equation] chance of going to the bottom, that means, on average, after about 52 top card riffles, the top card will go underneath the [KingOfDiamonds /].
+
+Tepeat the top card riffling, except now there are two spots to put the top card underneath the [KingOfDiamonds /], i.e., a [Equation]\frac{2}{52}[/Equation] chance of going underneath.
+
+[aside]
+**Note:** notice our [KingOfDiamonds /] can only rise in the deck.
+There are two cases:
+1. The top card is placed above the [KingOfDiamonds /], therefore its position does not change.
+2. The top card is placed underneath the [KingOfDiamonds /], therefore it rises one position closer to the top.
+[/aside]
+
+Repeat this until the [KingOfDiamonds /] becomes the top card and is placed rnadomly in the deck. 
+You now have a completely shuffled deck.
+
+So how many single card riffles does this take?
+Mathematically, it would be 
+
+[Equation]
+  \sum_{i=1}^{52} \frac{52}{i} = \frac{52}{1} + \frac{52}{2} + \frac{52}{3} + ... \approx 235
+[/Equation]
+
+[br/]
+
+That means, on average, after 235 single card riffles, we will have a completely randomly shuffled deck of cards.
+
+Let's visualize this.
+Below is an ordered deck of cards.
+Click the riffle button to move the top card somehwere else in the deck, where each position is equally likely.
+Click again.
+Now click a bunch more really fast.
+Now I could tell you to keep clicking until our blue [KingOfDiamonds /] rises to the rop, but as we have already shown, that would take about 235 clicks.
+Instead, click the auto click button to keep riffling until the [KingOfDiamonds /] moves to the top.
+
+[var name:"iter" value:0 /]
+[button onClick:`iter++`]Riffle[/button]
+You have riffled [Display value:iter /] times.
+[cardVis iterVar:iter /]
+
+[var name:`dataToBeCharted` value:`[
+  {x: 0, y: 0.5},
+  {x: 3.5, y: 0.5},
+  {x: 4, y: 0},
+  {x: 4.5, y: 1},
+  {x: 5, y: 0.5},
+  {x: 8, y: 0.5}
+]` /]
+
+Here's a chart of the [KingOfDiamonds /]'s position in the deck for each riffle iteration.
+Notice how it...
+
+[Chart type:"line" data:dataToBeCharted /]
+
+We can simulate this multiple times and verify that on average it takes 235 times.
+
+This article was created using Idyll, with visualizations by D3.
+The source code is available on GitHub.
+
+[Analytics google:"" /]

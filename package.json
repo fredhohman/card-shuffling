@@ -1,0 +1,18 @@
+{
+  "name": "card-shuffling",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "start": "idyll index.idyll --defaultComponents=components/default --theme github --css styles.css --watch",
+    "build": "idyll index.idyll --defaultComponents=components/default --theme github --css styles.css",
+    "deploy": "npm run build && gh-pages -d ./build"
+  },
+  "dependencies": {
+    "idyll": "^2.0.0",
+    "idyll-d3-component": "^2.0.0",
+    "d3": "^4.0.0"
+  },
+  "devDependencies": {
+    "gh-pages": "^0.12.0"
+  }
+}
