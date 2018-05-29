@@ -10,6 +10,7 @@ const cardSize = 15;
 
 const cardPrimitives = ['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
 const suites = ["♠","♣","♥","♦"];
+let propsUpdated = false;
 
 function makeCards(suites, cardPrimitives) {
   let cards = [];
@@ -112,7 +113,10 @@ class cardVis extends D3Component {
 
   update(props) {
 
-    console.log('riffle', props.iterVar );
+    if (propsUpdated === false) {
+      propsUpdated = true;
+
+      console.log('riffle', props.iterVar );
 
     function riffle(cards){
       let randCardIndex = Math.floor(Math.random() * cards.length);
@@ -148,8 +152,24 @@ class cardVis extends D3Component {
           return 'red';
         }
     });
-      
-  }
-}
+
+      const newXValue = props.iter;
+      const newYValue = cards.indexOf('K♦') + 1;
+      console.log('updateprops');
+      console.log(newYValue);
+
+    // Make sure you put this code in a conditional 
+    // so that it doesn't loop infinitely
+      props.updateProps({
+         points: props.points.concat([{
+           x: newXValue,
+           y: newYValue
+        }])
+        // iter: props.iter + 1
+      });
+      } else {
+      propsUpdated = false;
+    } 
+}}
 
 module.exports = cardVis;

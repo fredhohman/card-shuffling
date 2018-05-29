@@ -1,8 +1,8 @@
 [meta title:"Cards" description:"Short description of your project" /]
 
 [Header
-  title:"Shuffling Cards, Mathematically"
-  subtitle:"How many single card shuffles does it take to produce a randomly ordered deck of cards?"
+  title:"Shuffling Cards"
+  subtitle:"How many single card riffles does it take to produce a randomly ordered deck of cards?"
   author:"Fred Hohman"
   authorLink:"http://fredhohman.com" /]
 
@@ -61,7 +61,7 @@ So how many single card riffles does this take?
 Mathematically, it would be 
 
 [Equation]
-  \sum_{i=1}^{52} \frac{52}{i} = \frac{52}{1} + \frac{52}{2} + \frac{52}{3} + ... \approx 235
+  \sum_{i=1}^{52} \frac{52}{i} = \frac{52}{1} + \frac{52}{2} + \frac{52}{3} + ... + \frac{52}{52} \approx 235
 [/Equation]
 
 [br/]
@@ -77,23 +77,16 @@ Now I could tell you to keep clicking until our blue [KingOfDiamonds /] rises to
 Instead, click the auto click button to keep riffling until the [KingOfDiamonds /] moves to the top.
 
 [var name:"iter" value:0 /]
+[var name:"points" value:`[]` /]
+
 [button onClick:`iter++`]Riffle[/button]
 You have riffled [Display value:iter /] times.
-[cardVis iterVar:iter /]
-
-[var name:`dataToBeCharted` value:`[
-  {x: 0, y: 0.5},
-  {x: 3.5, y: 0.5},
-  {x: 4, y: 0},
-  {x: 4.5, y: 1},
-  {x: 5, y: 0.5},
-  {x: 8, y: 0.5}
-]` /]
+[cardVis iterVar:iter points:points /]
 
 Here's a chart of the [KingOfDiamonds /]'s position in the deck for each riffle iteration.
 Notice how it...
 
-[Chart type:"line" data:dataToBeCharted /]
+[Chart type:"line" data:points /]
 
 We can simulate this multiple times and verify that on average it takes 235 times.
 
