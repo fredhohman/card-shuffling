@@ -24,8 +24,6 @@ function makeCards(suites, cardPrimitives) {
 
 let cards = makeCards(suites, cardPrimitives);
 
-console.log(cards);
-
 class cardVis extends D3Component {
 
   initialize(node, props) {
@@ -153,10 +151,10 @@ class cardVis extends D3Component {
         }
     });
 
-      const newXValue = props.iter;
+      const newXValue = props.iterVar;
       const newYValue = cards.indexOf('K♦') + 1;
       console.log('updateprops');
-      console.log(newYValue);
+      console.log(newXValue, newYValue);
 
     // Make sure you put this code in a conditional 
     // so that it doesn't loop infinitely
@@ -168,7 +166,7 @@ class cardVis extends D3Component {
         // iter: props.iter + 1
       });
       } else {
-      propsUpdated = false;
+        propsUpdated = false;
     } 
 }}
 

@@ -31,7 +31,7 @@ So here's the question:
 
 *How many single riffles do you have to do in order to have a completely shuffled deck?*
 
-## Proof
+## Theorem
 You could simulate this in a short program, but instead we can solve it exactly using math.
 Consider an order deck of cards, that is, A, 2, 3, 4, etc. and each suite is stacked on top of one another.
 Without loss of generality, let's say the bottom suit is Diamonds.
@@ -86,7 +86,9 @@ You have riffled [Display value:iter /] times.
 Here's a chart of the [KingOfDiamonds /]'s position in the deck for each riffle iteration.
 Notice how it...
 
-[Chart type:"line" data:points /]
+// [Chart type:"line" data:points /]
+
+[positionChart points:points /]
 
 We can simulate this multiple times and verify that on average it takes 235 times.
 

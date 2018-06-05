@@ -3,14 +3,16 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "idyll index.idyll --defaultComponents=components/default --theme github --css styles.css --watch",
-    "build": "idyll index.idyll --defaultComponents=components/default --theme github --css styles.css",
+    "start": "idyll index.idyll --defaultComponents=components/default --theme idyll --css styles.css --watch",
+    "build": "idyll index.idyll --defaultComponents=components/default --theme idyll --css styles.css",
     "deploy": "npm run build && gh-pages -d ./build"
   },
   "dependencies": {
+    "d3": "^4.0.0",
     "idyll": "^2.0.0",
     "idyll-d3-component": "^2.0.0",
-    "d3": "^4.0.0"
+    "vega": "^4.0.0-rc.2",
+    "vega-lite": "^2.4.3"
   },
   "devDependencies": {
     "gh-pages": "^0.12.0"
