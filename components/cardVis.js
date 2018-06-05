@@ -8,22 +8,24 @@ const cardWidthMultiplier = 2.5;
 const cardHeightMultiplier = 3.5;
 const cardSize = 15;
 
-const cardPrimitives = ['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
-const suites = ["♠","♣","♥","♦"];
+const cardPrimitives = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+const suites = ["♠", "♣", "♥", "♦"];
 let propsUpdated = false;
 
 function makeCards(suites, cardPrimitives) {
   let cards = [];
   for (let i = 0; i < suites.length; i++) {
-      for (let j = 0; j < cardPrimitives.length; j++) {
-        cards.push(cardPrimitives[j] + suites[i]);
-     }
+    for (let j = 0; j < cardPrimitives.length; j++) {
+      cards.push(cardPrimitives[j] + suites[i]);
+    }
   }
   return cards;
 }
 
 let cards = makeCards(suites, cardPrimitives);
 
+
+// for (let t = 0; t < 10; t++) { iter = iter + t }
 class cardVis extends D3Component {
 
   initialize(node, props) {
@@ -39,25 +41,25 @@ class cardVis extends D3Component {
       .enter()
       .append('rect')
       .attr('class', 'card')
-      .attr('x', function(d, i) { return 40 + i%13 * 45 - 10; })
-      .attr('y', function(d, i) {
-        if(i < (cards.length-1)*(1/4)){
-          return height*(1/5) - 16;
+      .attr('x', function (d, i) { return 40 + i % 13 * 45 - 10; })
+      .attr('y', function (d, i) {
+        if (i < (cards.length - 1) * (1 / 4)) {
+          return height * (1 / 5) - 16;
         }
-        if(i > (cards.length-1)*(1/4) && i < (cards.length-1)*(2/4)){
-          return height*(2/5) - 16;
+        if (i > (cards.length - 1) * (1 / 4) && i < (cards.length - 1) * (2 / 4)) {
+          return height * (2 / 5) - 16;
         }
-        if(i > (cards.length-1)*(2/4) && i < (cards.length-1)*(3/4)){
-          return height*(3/5) - 16;
+        if (i > (cards.length - 1) * (2 / 4) && i < (cards.length - 1) * (3 / 4)) {
+          return height * (3 / 5) - 16;
         }
-        if(i > (cards.length-1)*(3/4) && i <= (cards.length-1)*(4/4)){
-          return height*(4/5) - 16;
+        if (i > (cards.length - 1) * (3 / 4) && i <= (cards.length - 1) * (4 / 4)) {
+          return height * (4 / 5) - 16;
         }
       })
-      .attr('width', cardSize*cardWidthMultiplier)
-      .attr('height', cardSize*cardHeightMultiplier)
-      .attr('fill', function(d) {
-          if(d === 'K♦') {
+      .attr('width', cardSize * cardWidthMultiplier)
+      .attr('height', cardSize * cardHeightMultiplier)
+      .attr('fill', function (d) {
+        if (d === 'K♦') {
           return 'red';
         } else {
           return '#FFFFFF';
@@ -67,45 +69,45 @@ class cardVis extends D3Component {
       .attr('ry', 3)
       .attr('stroke', '#444444')
       .attr('stroke-wdith', 1)
-      // .on('mouseover', function(d) { d3.select(this).attr('fill', '#F0F0F0'); })
-      // .on('mouseout', function(d) { d3.select(this).attr('fill', '#FFFFFF'); });
+    // .on('mouseover', function(d) { d3.select(this).attr('fill', '#F0F0F0'); })
+    // .on('mouseout', function(d) { d3.select(this).attr('fill', '#FFFFFF'); });
 
     svg.selectAll('text')
       .data(cards)
       .enter()
       .append('text')
       .attr('class', 'card-text')
-      .attr('x', function(d, i) { return 35 + i%13 * 45; })
-      .attr('y', function(d, i) {
-        if(i < (cards.length-1)*(1/4)){
-          return height*(1/5);
+      .attr('x', function (d, i) { return 35 + i % 13 * 45; })
+      .attr('y', function (d, i) {
+        if (i < (cards.length - 1) * (1 / 4)) {
+          return height * (1 / 5);
         }
-        if(i > (cards.length-1)*(1/4) && i < (cards.length-1)*(2/4)){
-          return height*(2/5);
+        if (i > (cards.length - 1) * (1 / 4) && i < (cards.length - 1) * (2 / 4)) {
+          return height * (2 / 5);
         }
-        if(i > (cards.length-1)*(2/4) && i < (cards.length-1)*(3/4)){
-          return height*(3/5);
+        if (i > (cards.length - 1) * (2 / 4) && i < (cards.length - 1) * (3 / 4)) {
+          return height * (3 / 5);
         }
-        if(i > (cards.length-1)*(3/4) && i <= (cards.length-1)*(4/4)){
-          return height*(4/5);
+        if (i > (cards.length - 1) * (3 / 4) && i <= (cards.length - 1) * (4 / 4)) {
+          return height * (4 / 5);
         }
       })
       // .attr('x', function(d,i) { return 20 + i*20 })
-      .text(function(d) { return d; })
+      .text(function (d) { return d; })
       .attr('text-anchor', 'start')
-      .attr('fill', function(d) {
-        if(d === 'K♦') {
+      .attr('fill', function (d) {
+        if (d === 'K♦') {
           return 'white';
         }
-        if((d[d.length-1] === suites[0]) || (d[d.length-1] === suites[1])){
+        if ((d[d.length - 1] === suites[0]) || (d[d.length - 1] === suites[1])) {
           return 'black';
         }
-        if((d[d.length-1] === suites[2]) || (d[d.length-1] === suites[3])){
+        if ((d[d.length - 1] === suites[2]) || (d[d.length - 1] === suites[3])) {
           return 'red';
         }
-    })
-    .style('font-size', '14px')
-    .style('font-weight', 700);
+      })
+      .style('font-size', '14px')
+      .style('font-weight', 700);
 
   }
 
@@ -114,60 +116,61 @@ class cardVis extends D3Component {
     if (propsUpdated === false) {
       propsUpdated = true;
 
-      console.log('riffle', props.iterVar );
+      console.log('riffle', props.iterVar);
 
-    function riffle(cards){
-      let randCardIndex = Math.floor(Math.random() * cards.length);
-      let topCard = cards.shift();
-      cards.splice(randCardIndex, 0, topCard);
-      return cards;
-    }
+      function riffle(cards) {
+        let randCardIndex = Math.floor(Math.random() * cards.length);
+        let topCard = cards.shift();
+        cards.splice(randCardIndex, 0, topCard);
+        return cards;
+      }
 
-    cards = riffle(cards);
-    console.log(cards);
+      cards = riffle(cards);
+      // console.log(cards);
 
-    this.svg.selectAll('.card')
-      .data(cards)
-      .attr('fill', function(d) {
-          if(d === 'K♦') {
-          return 'red';
-        } else {
-          return '#FFFFFF';
-        }
-      });
+      this.svg.selectAll('.card')
+        .data(cards)
+        .attr('fill', function (d) {
+          if (d === 'K♦') {
+            return 'red';
+          } else {
+            return '#FFFFFF';
+          }
+        });
 
-    this.svg.selectAll('.card-text')
-      .data(cards)
-      .text(function(d) { return d; })
-      .attr('fill', function(d) {
-        if(d === 'K♦') {
-          return 'white';
-        }
-        if((d[d.length-1] === suites[0]) || (d[d.length-1] === suites[1])){
-          return 'black';
-        }
-        if((d[d.length-1] === suites[2]) || (d[d.length-1] === suites[3])){
-          return 'red';
-        }
-    });
+      this.svg.selectAll('.card-text')
+        .data(cards)
+        .text(function (d) { return d; })
+        .attr('fill', function (d) {
+          if (d === 'K♦') {
+            return 'white';
+          }
+          if ((d[d.length - 1] === suites[0]) || (d[d.length - 1] === suites[1])) {
+            return 'black';
+          }
+          if ((d[d.length - 1] === suites[2]) || (d[d.length - 1] === suites[3])) {
+            return 'red';
+          }
+        });
 
       const newXValue = props.iterVar;
       const newYValue = cards.indexOf('K♦') + 1;
       console.log('updateprops');
-      console.log(newXValue, newYValue);
+      // console.log(newXValue, newYValue);
 
-    // Make sure you put this code in a conditional 
-    // so that it doesn't loop infinitely
+      // Make sure you put this code in a conditional 
+      // so that it doesn't loop infinitely
       props.updateProps({
-         points: props.points.concat([{
-           x: newXValue,
-           y: newYValue
+        points: props.points.concat([{
+          x: newXValue,
+          y: newYValue
         }])
         // iter: props.iter + 1
       });
-      } else {
-        propsUpdated = false;
-    } 
-}}
+    } else {
+      propsUpdated = false;
+    }
+  }
+}
 
 module.exports = cardVis;

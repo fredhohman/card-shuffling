@@ -2,12 +2,12 @@ const React = require('react');
 const D3Component = require('idyll-d3-component');
 const d3 = require('d3');
 
-const chartWidth = 600
+const chartWidth = 650
 const chartHeight = 300
 const margin = ({ top: 50, right: 50, bottom: 50, left: 50 })
 
 let xScale = d3.scaleLinear()
-    .domain([0, 1])
+    .domain([0, 250])
     .range([margin.left, chartWidth - margin.right])
 
 let yScale = d3.scaleLinear()
@@ -72,12 +72,10 @@ class positionChart extends D3Component {
   }
 
   update(props) {
-    console.log(props.points);
-    console.log(props.points[props.points.length - 1].x)
     
     let newestPoint = props.points[props.points.length - 1]
     xScale.domain([0, newestPoint.x]);
-    xScale.domain([0, 235]);
+    xScale.domain([0, 250]);
     d3.select('#x-axis').call(d3.axisBottom(xScale))
 
     this.svg.selectAll('circle')
@@ -97,7 +95,6 @@ class positionChart extends D3Component {
     this.svg.select('#chart-annotation')
       .attr('x', xScale(newestPoint.x) + 5)
       .attr('y', yScale(newestPoint.y) - 5)
-
 
   }
 }

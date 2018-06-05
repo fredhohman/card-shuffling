@@ -80,19 +80,22 @@ Instead, click the auto click button to keep riffling until the [KingOfDiamonds 
 [var name:"points" value:`[]` /]
 
 [button onClick:`iter++`]Riffle[/button]
+// [button onClick:`for (let t = 0; t < 10; t++) { iter += 1 }`]Riffle[/button]
+[CustomButton iter:iter ]Riffle[/CustomButton]
 You have riffled [Display value:iter /] times.
 [cardVis iterVar:iter points:points /]
 
 Here's a chart of the [KingOfDiamonds /]'s position in the deck for each riffle iteration.
 Notice how it...
 
-// [Chart type:"line" data:points /]
-
 [positionChart points:points /]
 
 We can simulate this multiple times and verify that on average it takes 235 times.
 
-This article was created using Idyll, with visualizations by D3.
-The source code is available on GitHub.
+This article was created using [a href:"https://idyll-lang.org/"]Idyll[/a].
+[br/]
+Shoutout to [a href:"https://twitter.com/mathisonian"]@mathisonian[/a] for help and feedback.
+[br/]
+The source code is available on [a href:"https://github.com/fredhohman/card-shuffling/"]Github[/a].
 
 [Analytics google:"" /]
