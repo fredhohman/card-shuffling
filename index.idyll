@@ -34,27 +34,30 @@ So here's the question:
 ## Theorem
 You could simulate this in a short program, but instead we can solve it exactly using math.
 Consider an order deck of cards, that is, A, 2, 3, 4, etc. and each suite is stacked on top of one another.
-Without loss of generality, let's say the bottom suit is Diamonds.
-So the bottom card of our deck is the King of Diamonds ([KingOfDiamonds /]).
+Without loss of generality, let's say the suits are in the following order: [card suit:"C"/], [card suit:"S"/], [card suit:"H"/], [card suit:"D"/].
+
+[cardVis/]
+
+So the bottom suit is [card suit:"D"/], which means the bottom card of our deck is the King of Diamonds ([card number:"K" suit:"D"/]), which is highlighted red.
 Now do the following iteration:
 
 * Take the top card of the deck, the Ace of another suite besides Diamonds, and randomly place it anywhere inside the deck
 
 We now have placed our orignal top card somehwere in the deck, so our new top card is the 2 of some suit besides Diamonds.
 Continue this procedure of taking the top card and randomly placing somewhere else in the deck.
-Eventually, you'll move the top card to the very bottom of the deck, which means our [KingOfDiamonds /] is now the 51st card in the deck from the top.
-Since for every top card you place has a [Equation]\frac{1}{52}[/Equation] chance of going to the bottom, that means, on average, after about 52 top card riffles, the top card will go underneath the [KingOfDiamonds /].
+Eventually, you'll move the top card to the very bottom of the deck, which means our [card number:"K" suit:"D"/] is now the 51st card in the deck from the top.
+Since for every top card you place has a [Equation]\frac{1}{52}[/Equation] chance of going to the bottom, that means, on average, after about 52 top card riffles, the top card will go underneath the [card number:"K" suit:"D"/].
 
-Tepeat the top card riffling, except now there are two spots to put the top card underneath the [KingOfDiamonds /], i.e., a [Equation]\frac{2}{52}[/Equation] chance of going underneath.
+Tepeat the top card riffling, except now there are two spots to put the top card underneath the [card number:"K" suit:"D"/], i.e., a [Equation]\frac{2}{52}[/Equation] chance of going underneath.
 
 [aside]
-**Note:** notice our [KingOfDiamonds /] can only rise in the deck.
+**Note:** notice our [card number:"K" suit:"D"/] can only rise in the deck.
 There are two cases:
-1. The top card is placed above the [KingOfDiamonds /], therefore its position does not change.
-2. The top card is placed underneath the [KingOfDiamonds /], therefore it rises one position closer to the top.
+1. The top card is placed above the [card number:"K" suit:"D"/], therefore its position does not change.
+2. The top card is placed underneath the [card number:"K" suit:"D"/], therefore it rises one position closer to the top.
 [/aside]
 
-Repeat this until the [KingOfDiamonds /] becomes the top card and is placed rnadomly in the deck. 
+Repeat this until the [card number:"K" suit:"D"/] becomes the top card and is placed rnadomly in the deck. 
 You now have a completely shuffled deck.
 
 So how many single card riffles does this take?
@@ -73,8 +76,8 @@ Below is an ordered deck of cards.
 Click the riffle button to move the top card somehwere else in the deck, where each position is equally likely.
 Click again.
 Now click a bunch more really fast.
-Now I could tell you to keep clicking until our blue [KingOfDiamonds /] rises to the rop, but as we have already shown, that would take about 235 clicks.
-Instead, click the auto click button to keep riffling until the [KingOfDiamonds /] moves to the top.
+Now I could tell you to keep clicking until our blue [card number:"K" suit:"D"/] rises to the rop, but as we have already shown, that would take about 235 clicks.
+Instead, click the auto click button to keep riffling until the [card number:"K" suit:"D"/] moves to the top.
 
 [var name:"iter" value:0 /]
 [var name:"points" value:`[{x:0, y:52}]` /]
@@ -85,7 +88,7 @@ Instead, click the auto click button to keep riffling until the [KingOfDiamonds 
 You have riffled [Display value:iter /] times.
 [cardVis iterVar:iter points:points /]
 
-Here's a chart of the [KingOfDiamonds /]'s position in the deck for each riffle iteration.
+Here's a chart of the [card number:"K" suit:"D"/]'s position in the deck for each riffle iteration.
 Notice how it...
 
 [positionChart points:points /]
