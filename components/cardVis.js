@@ -9,23 +9,21 @@ const cardHeightMultiplier = 3.5;
 const cardSize = 15;
 
 const cardPrimitives = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
-const suites = ["♠", "♣", "♥", "♦"];
+const suits = ["♠", "♣", "♥", "♦"];
 let propsUpdated = false;
 
-function makeCards(suites, cardPrimitives) {
+function makeCards(suits, cardPrimitives) {
   let cards = [];
-  for (let i = 0; i < suites.length; i++) {
+  for (let i = 0; i < suits.length; i++) {
     for (let j = 0; j < cardPrimitives.length; j++) {
-      cards.push(cardPrimitives[j] + suites[i]);
+      cards.push(cardPrimitives[j] + suits[i]);
     }
   }
   return cards;
 }
 
-let cards = makeCards(suites, cardPrimitives);
+let cards = makeCards(suits, cardPrimitives);
 
-
-// for (let t = 0; t < 10; t++) { iter = iter + t }
 class cardVis extends D3Component {
 
   initialize(node, props) {
@@ -99,10 +97,10 @@ class cardVis extends D3Component {
         if (d === 'K♦') {
           return 'white';
         }
-        if ((d[d.length - 1] === suites[0]) || (d[d.length - 1] === suites[1])) {
+        if ((d[d.length - 1] === suits[0]) || (d[d.length - 1] === suits[1])) {
           return 'black';
         }
-        if ((d[d.length - 1] === suites[2]) || (d[d.length - 1] === suites[3])) {
+        if ((d[d.length - 1] === suits[2]) || (d[d.length - 1] === suits[3])) {
           return 'red';
         }
       })
@@ -114,6 +112,14 @@ class cardVis extends D3Component {
   update(props) {
 
     if (propsUpdated === false) {
+      let lastPoint = props.points[props.points.length - 1];
+      if (lastPoint.y === 1) {
+        // console.log('STOP');
+      } else {
+
+
+
+
       propsUpdated = true;
 
       console.log('riffle', props.iterVar);
@@ -145,10 +151,10 @@ class cardVis extends D3Component {
           if (d === 'K♦') {
             return 'white';
           }
-          if ((d[d.length - 1] === suites[0]) || (d[d.length - 1] === suites[1])) {
+          if ((d[d.length - 1] === suits[0]) || (d[d.length - 1] === suits[1])) {
             return 'black';
           }
-          if ((d[d.length - 1] === suites[2]) || (d[d.length - 1] === suites[3])) {
+          if ((d[d.length - 1] === suits[2]) || (d[d.length - 1] === suits[3])) {
             return 'red';
           }
         });
@@ -167,6 +173,10 @@ class cardVis extends D3Component {
         }])
         // iter: props.iter + 1
       });
+
+
+    }
+
     } else {
       propsUpdated = false;
     }

@@ -77,11 +77,11 @@ Now I could tell you to keep clicking until our blue [KingOfDiamonds /] rises to
 Instead, click the auto click button to keep riffling until the [KingOfDiamonds /] moves to the top.
 
 [var name:"iter" value:0 /]
-[var name:"points" value:`[]` /]
+[var name:"points" value:`[{x:0, y:52}]` /]
 
-[button onClick:`iter++`]Riffle[/button]
+[button onClick:`if(points[points.length-1].y !== 1){iter++}`]Riffle[/button]
 // [button onClick:`for (let t = 0; t < 10; t++) { iter += 1 }`]Riffle[/button]
-[CustomButton iter:iter ]Riffle[/CustomButton]
+[CustomButton iter:iter points:points ]Riffle[/CustomButton]
 You have riffled [Display value:iter /] times.
 [cardVis iterVar:iter points:points /]
 
