@@ -73,6 +73,7 @@ Following the logic from above, we can calculate the number of riffles it would 
 
 That means, on average, after 235 single card riffles, we will have a completely randomly shuffled deck of cards.
 
+## Let's Riffle
 Let's visualize this.
 Below is the same ordered deck of cards, except the [card number:"K" suit:"D"/] has been highlighted red so you can follow its journey to the top of the deck.
 
@@ -100,7 +101,11 @@ Notice how it it takes a long time to move the [card number:"K" suit:"D"/] up ju
 
 [positionChart points:points /]
 
-We can simulate this multiple times and verify that on average it takes 235 times.
+If you were lucky, your [card number:"K" suit:"D"/] reached the top position somewhere around 235 riffles.
+But remember, this is the *average* result, so there is a chance you are far off.
+Blame probability.
+
+// We can simulate this multiple times and verify that on average it takes 235 times.
 
 This article was created using [a href:"https://idyll-lang.org/"]Idyll[/a].
 [br/]

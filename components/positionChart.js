@@ -49,7 +49,7 @@ class positionChart extends D3Component {
       svg.append("text")
           .attr("transform", "translate(" + (chartWidth / 2) + " ," + (chartHeight - 10) + ")")
           .style("text-anchor", "middle")
-          .text("counter");
+          .text("number of riffles");
 
       svg.append("g")
           .attr("stroke", "#000")
@@ -102,6 +102,15 @@ class positionChart extends D3Component {
       .attr('stroke', 'gray')
       .attr('stroke-width', 1)
       .attr('fill', 'none')
+
+    svg.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", xScale(235-3))
+      .attr("x", 0 - (chartHeight / 2))
+      // .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("expected riffle count")
+      .style('fill', 'gray');
       
       // annotation
         svg.append("g")
