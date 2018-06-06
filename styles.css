@@ -9,3 +9,7 @@ body {
 a {
 	/* box-shadow: inset 0 -4px 0 blue; */
 }
+
+.card:hover {
+	/* fill: #eeeeee; */
+}

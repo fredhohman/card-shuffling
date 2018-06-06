@@ -57,16 +57,20 @@ class cardVis extends D3Component {
       .attr('width', cardSize * cardWidthMultiplier)
       .attr('height', cardSize * cardHeightMultiplier)
       .attr('fill', function (d) {
-        if (d === 'K♦') {
-          return 'red';
+        if (props.static === "True") {
+          return '#FFFFFF'
         } else {
-          return '#FFFFFF';
+          if (d === 'K♦') {
+            return 'red';
+          } else {
+            return '#FFFFFF';
+          }
         }
       })
       .attr('rx', 3)
       .attr('ry', 3)
       .attr('stroke', '#444444')
-      .attr('stroke-wdith', 1)
+      .attr('stroke-width', 1)
     // .on('mouseover', function(d) { d3.select(this).attr('fill', '#F0F0F0'); })
     // .on('mouseout', function(d) { d3.select(this).attr('fill', '#FFFFFF'); });
 
@@ -94,60 +98,14 @@ class cardVis extends D3Component {
       .text(function (d) { return d; })
       .attr('text-anchor', 'start')
       .attr('fill', function (d) {
-        if (d === 'K♦') {
-          return 'white';
-        }
-        if ((d[d.length - 1] === suits[0]) || (d[d.length - 1] === suits[1])) {
-          return 'black';
-        }
-        if ((d[d.length - 1] === suits[2]) || (d[d.length - 1] === suits[3])) {
-          return 'red';
-        }
-      })
-      .style('font-size', '14px')
-      .style('font-weight', 700);
-
-  }
-
-  update(props) {
-
-    if (propsUpdated === false) {
-      let lastPoint = props.points[props.points.length - 1];
-      if (lastPoint.y === 1) {
-        // console.log('STOP');
-      } else {
-
-
-
-
-      propsUpdated = true;
-
-      console.log('riffle', props.iterVar);
-
-      function riffle(cards) {
-        let randCardIndex = Math.floor(Math.random() * cards.length);
-        let topCard = cards.shift();
-        cards.splice(randCardIndex, 0, topCard);
-        return cards;
-      }
-
-      cards = riffle(cards);
-      // console.log(cards);
-
-      this.svg.selectAll('.card')
-        .data(cards)
-        .attr('fill', function (d) {
-          if (d === 'K♦') {
-            return 'red';
-          } else {
-            return '#FFFFFF';
+        if (props.static === "True") {
+          if ((d[d.length - 1] === suits[0]) || (d[d.length - 1] === suits[1])) {
+            return 'black';
           }
-        });
-
-      this.svg.selectAll('.card-text')
-        .data(cards)
-        .text(function (d) { return d; })
-        .attr('fill', function (d) {
+          if ((d[d.length - 1] === suits[2]) || (d[d.length - 1] === suits[3])) {
+            return 'red';
+          }
+        } else {
           if (d === 'K♦') {
             return 'white';
           }
@@ -157,26 +115,68 @@ class cardVis extends D3Component {
           if ((d[d.length - 1] === suits[2]) || (d[d.length - 1] === suits[3])) {
             return 'red';
           }
+        }
+      })
+      .style('font-size', '14px')
+      .style('font-weight', 700);
+  }
+
+  update(props) {
+
+    if (propsUpdated === false) {
+      let lastPoint = props.points[props.points.length - 1];
+      if (lastPoint.y !== 1) {
+        propsUpdated = true;
+
+        // console.log('riffle', props.iterVar);
+
+        function riffle(cards) {
+          let randCardIndex = Math.floor(Math.random() * cards.length);
+          let topCard = cards.shift();
+          cards.splice(randCardIndex, 0, topCard);
+          return cards;
+        }
+        cards = riffle(cards);
+
+        this.svg.selectAll('.card')
+          .data(cards)
+          .attr('fill', function (d) {
+            if (d === 'K♦') {
+              return 'red';
+            } else {
+              return '#FFFFFF';
+            }
+          });
+
+        this.svg.selectAll('.card-text')
+          .data(cards)
+          .text(function (d) { return d; })
+          .attr('fill', function (d) {
+            if (d === 'K♦') {
+              return 'white';
+            }
+            if ((d[d.length - 1] === suits[0]) || (d[d.length - 1] === suits[1])) {
+              return 'black';
+            }
+            if ((d[d.length - 1] === suits[2]) || (d[d.length - 1] === suits[3])) {
+              return 'red';
+            }
+          });
+
+        const newXValue = props.iterVar;
+        const newYValue = cards.indexOf('K♦') + 1;
+        // console.log('updateprops');
+
+        // Make sure you put this code in a conditional 
+        // so that it doesn't loop infinitely
+        props.updateProps({
+          points: props.points.concat([{
+            x: newXValue,
+            y: newYValue
+          }])
+          // iter: props.iter + 1
         });
-
-      const newXValue = props.iterVar;
-      const newYValue = cards.indexOf('K♦') + 1;
-      console.log('updateprops');
-      // console.log(newXValue, newYValue);
-
-      // Make sure you put this code in a conditional 
-      // so that it doesn't loop infinitely
-      props.updateProps({
-        points: props.points.concat([{
-          x: newXValue,
-          y: newYValue
-        }])
-        // iter: props.iter + 1
-      });
-
-
-    }
-
+      }
     } else {
       propsUpdated = false;
     }

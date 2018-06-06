@@ -6,8 +6,10 @@ const chartWidth = 650
 const chartHeight = 300
 const margin = ({ top: 50, right: 50, bottom: 50, left: 50 })
 
+const circleRadius = 3;
+
 let xScale = d3.scaleLinear()
-    .domain([0, 250])
+    .domain([0, 300])
     .range([margin.left, chartWidth - margin.right])
 
 let yScale = d3.scaleLinear()
@@ -58,8 +60,50 @@ class positionChart extends D3Component {
           .attr('class', 'point')
           .attr("cx", d => xScale(d.x))
           .attr("cy", d => yScale(d.y))
-          .attr("r", 2.5);
+          .attr("r", circleRadius);
 
+    var arc = d3.arc();
+
+    var halfcircle = function (x, y, rad) {
+      return svg.append('path')
+        .attr('transform', 'translate(' + [x, y] + ')')
+        .attr('d', arc({
+          innerRadius: 0,
+          outerRadius: rad,
+          startAngle: -Math.PI * 0.5,
+          endAngle: Math.PI * 0.5
+        }));
+    }
+
+    // estimate annotation
+    var radialGradient = svg.append("defs")
+      .append("radialGradient")
+      .attr("id", "radial-gradient");
+
+    radialGradient.append("stop")
+      .attr("offset", "0%")
+      .attr("stop-color", "red");
+
+    radialGradient.append("stop")
+      .attr("offset", "100%")
+      .attr("stop-color", "#fff");
+
+    // halfcircle(xScale(235), yScale(0), 50).attr('fill', "#eeeeee")
+    // halfcircle(xScale(235), yScale(0), 30).attr('fill', "#cccccc")
+    // halfcircle(xScale(235), yScale(0), 10).attr('fill', "#444444")
+
+    var lineData = [{x:235, y:0}, {x:236, y:51}];
+    var lineGenerator = d3.line().x(function (d) { return xScale(d.x) }).y(function (d) { return yScale(d.y) });;
+    var pathString = lineGenerator(lineData);
+
+    svg.append("g")
+    .append('path')
+      .attr('d', pathString)
+      .attr('stroke', 'gray')
+      .attr('stroke-width', 1)
+      .attr('fill', 'none')
+      
+      // annotation
         svg.append("g")
           .append('text')
           .text('K♦')
@@ -68,14 +112,12 @@ class positionChart extends D3Component {
           .attr('id', 'chart-annotation')
           .attr('fill', 'red')
           .style('font-weight', 700)
-
   }
 
   update(props) {
     
     let newestPoint = props.points[props.points.length - 1]
-    xScale.domain([0, newestPoint.x]);
-    xScale.domain([0, 250]);
+    xScale.domain([0, d3.max([300, newestPoint.x])]);
     d3.select('#x-axis').call(d3.axisBottom(xScale))
 
     this.svg.selectAll('circle')
@@ -84,13 +126,13 @@ class positionChart extends D3Component {
       .attr('class', 'point')
       .attr("cx", d => xScale(d.x))
       .attr("cy", d => yScale(d.y))
-      .attr("r", 2.5);
+      .attr("r", circleRadius);
 
     this.svg.selectAll('circle')
       .data(props.points)
       .attr("cx", d => xScale(d.x))
       .attr("cy", d => yScale(d.y))
-      .attr("r", 2.5);
+      .attr("r", circleRadius);
 
     this.svg.select('#chart-annotation')
       .attr('x', xScale(newestPoint.x) + 5)
