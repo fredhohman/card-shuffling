@@ -33,35 +33,37 @@ So here's the question:
 
 ## Theorem
 You could simulate this in a short program, but instead we can solve it exactly using math.
-Consider an order deck of cards, that is, A, 2, 3, 4, etc. and each suite is stacked on top of one another.
-Without loss of generality, let's say the suits are in the following order: [card suit:"C"/], [card suit:"S"/], [card suit:"H"/], [card suit:"D"/].
+Consider an order deck of cards.
+Without loss of generality, let's say the suits are in the following order: [card suit:"S"/], [card suit:"C"/], [card suit:"H"/], [card suit:"D"/].
+So our deck looks like this.
 
-[cardVis/]
+[cardVis static:"True"/]
 
-So the bottom suit is [card suit:"D"/], which means the bottom card of our deck is the King of Diamonds ([card number:"K" suit:"D"/]), which is highlighted red.
+So the bottom suit is [card suit:"D"/], which means the bottom card of our deck is the King of Diamonds ([card number:"K" suit:"D"/]).
 Now do the following iteration:
 
-* Take the top card of the deck, the Ace of another suite besides Diamonds, and randomly place it anywhere inside the deck
+>Place the top card of the deck randomly inside the deck
 
-We now have placed our orignal top card somehwere in the deck, so our new top card is the 2 of some suit besides Diamonds.
-Continue this procedure of taking the top card and randomly placing somewhere else in the deck.
-Eventually, you'll move the top card to the very bottom of the deck, which means our [card number:"K" suit:"D"/] is now the 51st card in the deck from the top.
+In our example above, we would take the [card number:"A" suit:"S"/] and place it randomly somewhere in the deck.
+Our new top card is the [card number:"2" suit:"S"/].
+If we continue this procedure of taking the top card and randomly placing somewhere else in the deck, eventually we'll move the top card to the very bottom of the deck, which means our [card number:"K" suit:"D"/] is now the 51st card in the deck from the top.
 Since for every top card you place has a [Equation]\frac{1}{52}[/Equation] chance of going to the bottom, that means, on average, after about 52 top card riffles, the top card will go underneath the [card number:"K" suit:"D"/].
 
-Tepeat the top card riffling, except now there are two spots to put the top card underneath the [card number:"K" suit:"D"/], i.e., a [Equation]\frac{2}{52}[/Equation] chance of going underneath.
+Now, if we do another top card riffle, there are now two spots to put the top card underneath the [card number:"K" suit:"D"/], i.e., a [Equation]\frac{2}{52}[/Equation] chance of going underneath.
 
 [aside]
-**Note:** notice our [card number:"K" suit:"D"/] can only rise in the deck.
+**Note:** notice the [card number:"K" suit:"D"/] can only rise in the deck.
 There are two cases:
 1. The top card is placed above the [card number:"K" suit:"D"/], therefore its position does not change.
 2. The top card is placed underneath the [card number:"K" suit:"D"/], therefore it rises one position closer to the top.
 [/aside]
 
-Repeat this until the [card number:"K" suit:"D"/] becomes the top card and is placed rnadomly in the deck. 
-You now have a completely shuffled deck.
+If we continue this process, the [card number:"K" suit:"D"/] will eventually become the top card of our deck.
+Once this last card from our oriignal ordered deck is shuffled into the deck, we now have a completely shuffled deck, that is, this order is equally likely to any othe order.
 
 So how many single card riffles does this take?
-Mathematically, it would be 
+Recall each time a card is placed underneath the [card number:"K" suit:"D"/], out chances of placing another card increases.
+Following the logic from above, we can calculate the number of riffles it would take.
 
 [Equation]
   \sum_{i=1}^{52} \frac{52}{i} = \frac{52}{1} + \frac{52}{2} + \frac{52}{3} + ... + \frac{52}{52} \approx 235
@@ -72,24 +74,29 @@ Mathematically, it would be
 That means, on average, after 235 single card riffles, we will have a completely randomly shuffled deck of cards.
 
 Let's visualize this.
-Below is an ordered deck of cards.
-Click the riffle button to move the top card somehwere else in the deck, where each position is equally likely.
+Below is the same ordered deck of cards, except the [card number:"K" suit:"D"/] has been highlighted red so you can follow its journey to the top of the deck.
+
+Click the riffle button to move the top card somewhere else in the deck randomly.
+
 Click again.
+
 Now click a bunch more really fast.
-Now I could tell you to keep clicking until our blue [card number:"K" suit:"D"/] rises to the rop, but as we have already shown, that would take about 235 clicks.
-Instead, click the auto click button to keep riffling until the [card number:"K" suit:"D"/] moves to the top.
+
+Now I could tell you to keep clicking until the highlighted [card number:"K" suit:"D"/] rises to the top, but as we have already shown, that would take about 235 clicks.
+Instead, click the multi riffle button to riffle 10 times.
+Keep riffling until the [card number:"K" suit:"D"/] moves to the top.
 
 [var name:"iter" value:0 /]
 [var name:"points" value:`[{x:0, y:52}]` /]
 
 [button onClick:`if(points[points.length-1].y !== 1){iter++}`]Riffle[/button]
-// [button onClick:`for (let t = 0; t < 10; t++) { iter += 1 }`]Riffle[/button]
-[CustomButton iter:iter points:points ]Riffle[/CustomButton]
+[br/]
+[multiRiffle iter:iter points:points ]Riffle[/multiRiffle]
 You have riffled [Display value:iter /] times.
 [cardVis iterVar:iter points:points /]
 
 Here's a chart of the [card number:"K" suit:"D"/]'s position in the deck for each riffle iteration.
-Notice how it...
+Notice how it it takes a long time to move the [card number:"K" suit:"D"/] up just a few positions, but once the [card number:"K" suit:"D"/] starts rising towards the top, it accelerates.
 
 [positionChart points:points /]
 
