@@ -6,7 +6,8 @@ const chartWidth = 650
 const chartHeight = 300
 const margin = ({ top: 50, right: 50, bottom: 50, left: 50 })
 
-const circleRadius = 3;
+const circleRadius = 2;
+const circleOpacity = 0.5;
 
 let xScale = d3.scaleLinear()
     .domain([0, 300])
@@ -60,7 +61,8 @@ class positionChart extends D3Component {
           .attr('class', 'point')
           .attr("cx", d => xScale(d.x))
           .attr("cy", d => yScale(d.y))
-          .attr("r", circleRadius);
+          .attr("r", circleRadius)
+          .attr("opacity", circleOpacity);
 
     var arc = d3.arc();
 
@@ -135,13 +137,15 @@ class positionChart extends D3Component {
       .attr('class', 'point')
       .attr("cx", d => xScale(d.x))
       .attr("cy", d => yScale(d.y))
-      .attr("r", circleRadius);
+      .attr("r", circleRadius)
+      .attr("opacity", circleOpacity);;
 
     this.svg.selectAll('circle')
       .data(props.points)
       .attr("cx", d => xScale(d.x))
       .attr("cy", d => yScale(d.y))
-      .attr("r", circleRadius);
+      .attr("r", circleRadius)
+      .attr("opacity", circleOpacity);;
 
     this.svg.select('#chart-annotation')
       .attr('x', xScale(newestPoint.x) + 5)

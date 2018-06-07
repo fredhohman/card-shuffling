@@ -124,6 +124,12 @@ class cardVis extends D3Component {
   update(props) {
 
     if (propsUpdated === false) {
+      
+      if (props.iterVar === 0) {
+        cards = makeCards(suits, cardPrimitives);
+        console.log(cards)
+      }
+
       let lastPoint = props.points[props.points.length - 1];
       if (lastPoint.y !== 1) {
         propsUpdated = true;
