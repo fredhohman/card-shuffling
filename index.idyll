@@ -2,9 +2,11 @@
 
 [Header
   title:"Shuffling Cards"
-  subtitle:"How many single card riffles does it take to produce a randomly ordered deck of cards?"
+  subtitle:"Riffling to randomness"
   author:"Fred Hohman"
   authorLink:"http://fredhohman.com" /]
+
+// subtitle:"How many single card riffles does it take to produce a randomly ordered deck of cards?"
 
 Most people have seen someone shuffle a deck of cards.
 Sometimes you split a deck in half and switch halves.
@@ -91,8 +93,8 @@ Keep riffling until the [card number:"K" suit:"D"/] moves to the top.
 [var name:"points" value:`[{x:0, y:52}]` /]
 
 [button onClick:`if(points[points.length-1].y !== 1){iter++}`]Riffle[/button]
-[br/]
-[multiRiffle iter:iter points:points ]Riffle[/multiRiffle]
+// [br/]
+[multiRiffle iter:iter points:points ]Riffle (x10)[/multiRiffle]
 You have riffled [Display value:iter /] times.
 [cardVis iterVar:iter points:points /]
 

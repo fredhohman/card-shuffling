@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "idyll index.idyll --defaultComponents=components/default --theme idyll --css styles.css --watch",
-    "build": "idyll index.idyll --defaultComponents=components/default --theme idyll --css styles.css",
+    "start": "idyll index.idyll --defaultComponents=components/default --theme idyll --css styles.css --template _index.html --watch",
+    "build": "idyll index.idyll --defaultComponents=components/default --theme idyll --css styles.css --template _index.html",
     "deploy": "npm run build && gh-pages -d ./build"
   },
   "dependencies": {
