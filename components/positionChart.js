@@ -6,8 +6,8 @@ const chartWidth = 650
 const chartHeight = 300
 const margin = ({ top: 50, right: 50, bottom: 50, left: 50 })
 
-const circleRadius = 2;
-const circleOpacity = 0.5;
+const circleRadius = 3;
+const circleOpacity = 1;
 
 let xScale = d3.scaleLinear()
     .domain([0, 300])
@@ -18,6 +18,8 @@ let yScale = d3.scaleLinear()
     .range([chartHeight - margin.bottom, margin.top])
 
 let chartData = [{ count: 0, place: 52 }, { count: 10, place: 20 }]
+
+let lineData = [{ x: 235, y: 0 }, { x: 235, y: 51 }];
 
 class positionChart extends D3Component {
 
@@ -94,25 +96,25 @@ class positionChart extends D3Component {
     // halfcircle(xScale(235), yScale(0), 30).attr('fill', "#cccccc")
     // halfcircle(xScale(235), yScale(0), 10).attr('fill', "#444444")
 
-    var lineData = [{x:235, y:0}, {x:236, y:51}];
-    var lineGenerator = d3.line().x(function (d) { return xScale(d.x) }).y(function (d) { return yScale(d.y) });;
-    var pathString = lineGenerator(lineData);
+    let lineGenerator = d3.line().x(function (d) { return xScale(d.x) }).y(function (d) { return yScale(d.y) });
 
     svg.append("g")
     .append('path')
-      .attr('d', pathString)
-      .attr('stroke', 'gray')
+      .attr('d', lineGenerator(lineData))
+      .attr('stroke', 'red')
       .attr('stroke-width', 1)
       .attr('fill', 'none')
+      .attr('id', 'expected-riffle-count')
 
     svg.append("text")
+    .attr('id', 'expected-riffle-count-label')
       .attr("transform", "rotate(-90)")
       .attr("y", xScale(235-3))
       .attr("x", 0 - (chartHeight / 2))
       // .attr("dy", "1em")
       .style("text-anchor", "middle")
       .text("expected riffle count")
-      .style('fill', 'gray');
+      .style('fill', 'red');
       
       // annotation
         svg.append("g")
@@ -131,6 +133,10 @@ class positionChart extends D3Component {
     xScale.domain([0, d3.max([300, newestPoint.x])]);
     d3.select('#x-axis').call(d3.axisBottom(xScale))
 
+    if (props.iterVal === 0) {
+      this.svg.selectAll('circle').remove();
+    }
+
     this.svg.selectAll('circle')
       .data(props.points)
       .enter().append("circle")
@@ -138,18 +144,59 @@ class positionChart extends D3Component {
       .attr("cx", d => xScale(d.x))
       .attr("cy", d => yScale(d.y))
       .attr("r", circleRadius)
-      .attr("opacity", circleOpacity);;
+      .attr("opacity", circleOpacity);
 
     this.svg.selectAll('circle')
       .data(props.points)
       .attr("cx", d => xScale(d.x))
       .attr("cy", d => yScale(d.y))
       .attr("r", circleRadius)
-      .attr("opacity", circleOpacity);;
+      .attr("opacity", circleOpacity);
 
     this.svg.select('#chart-annotation')
       .attr('x', xScale(newestPoint.x) + 5)
       .attr('y', yScale(newestPoint.y) - 5)
+
+    let lineGenerator = d3.line().x(function (d) { return xScale(d.iter) }).y(function (d) { return yScale(d.position) });
+    
+    this.svg.selectAll('.endPoint')
+    .data(props.endPoints)
+    .enter()
+      .append("g")
+      .append('path')
+      .attr('class', 'endPoint')
+      .attr('d', function (d) { return lineGenerator(d) })
+      .attr('stroke', 'gray')
+      .attr('stroke-width', 1)
+      .attr('fill', 'none')
+
+    this.svg.selectAll('.endPointLabel')
+    .data(props.endPoints)
+    .enter()
+    .append("text")
+      .attr('class', 'endPointLabel')
+      .attr("y", function(d) { return yScale(52) })
+      .attr("x", function(d) { return xScale(d[0].iter) })
+      .style("text-anchor", "middle")
+      .text(function (d) { return d[0].iter })
+      .style('fill', 'gray')
+      .style('font-size', 12);
+
+    this.svg.selectAll('.endPoint')
+      .data(props.endPoints)
+      .attr('d', function (d) { return lineGenerator(d) })
+
+    this.svg.selectAll('.endPointLabel')
+    .data(props.endPoints)
+      .attr("x", function (d) { return xScale(d[0].iter) })
+
+    lineGenerator = d3.line().x(function (d) { return xScale(d.x) }).y(function (d) { return yScale(d.y) });
+
+    this.svg.select('#expected-riffle-count-label')
+      .attr("y", xScale(235 - 3))
+
+    this.svg.select('#expected-riffle-count')
+      .attr('d', lineGenerator(lineData))
 
   }
 }

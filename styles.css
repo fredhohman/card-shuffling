@@ -57,3 +57,14 @@ button:active {
 button:focus {
 	outline: 0;
 }
+
+.clear {
+	background-color: #444444;
+	color: white;
+	border: 1px solid white;
+}
+
+.clear:hover {
+	background-color: #666666;
+
+}

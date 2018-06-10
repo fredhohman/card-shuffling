@@ -91,22 +91,26 @@ Keep riffling until the [card number:"K" suit:"D"/] moves to the top.
 
 [var name:"iter" value:0 /]
 [var name:"points" value:`[{x:0, y:52}]` /]
+[var name:"endPoints" value:`[]` /]
 
 [button onClick:`if(points[points.length-1].y !== 1){iter++}`]Riffle[/button]
 // [br/]
 [multiRiffle iter:iter points:points ]Riffle (x10)[/multiRiffle]
 You have riffled [Display value:iter /] times.
 [cardVis iterVar:iter points:points /]
-[button onClick:`console.log(iter, points); iter=-1; points.push({x:0 ,y:52}); console.log(iter, points); iter++; console.log(iter, points)`]Clear[/button]
+
+[button className:"clear" onClick:`endPoints.push([{iter:iter, position:0}, {iter:iter, position:51}]); iter=-1; points=[{x:0, y:52}]; iter++;`]Clear[/button]
+// points.push({x:0 ,y:52}
 
 Here's a chart of the [card number:"K" suit:"D"/]'s position in the deck for each riffle iteration.
 Notice how it it takes a long time to move the [card number:"K" suit:"D"/] up just a few positions, but once the [card number:"K" suit:"D"/] starts rising towards the top, it accelerates.
 
-[positionChart points:points /]
+[positionChart iterVal:iter points:points endPoints:endPoints /]
 
-If you were lucky, your [card number:"K" suit:"D"/] reached the top position somewhere around 235 riffles.
+On average, your [card number:"K" suit:"D"/] reached the top position somewhere around 235 riffles.
 But remember, this is the *average* result, so there is a chance you are far off.
 Blame probability.
+To try again, click the Clear button.
 
 // We can simulate this multiple times and verify that on average it takes 235 times.
 
