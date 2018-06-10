@@ -175,12 +175,14 @@ class positionChart extends D3Component {
     .enter()
     .append("text")
       .attr('class', 'endPointLabel')
-      .attr("y", function(d) { return yScale(52) })
-      .attr("x", function(d) { return xScale(d[0].iter) })
+      .attr("y", function(d) { return yScale(52) - 10 })
+      .attr("x", function(d) { return xScale(d[0].iter) + 4 })
       .style("text-anchor", "middle")
+      .attr('transform', function (d) { return 'rotate(270,' + (xScale(d[0].iter)+4) + ',' + (yScale(52) - 10) + ')' })
+      // .attr('transform', 'rotate(90)')
       .text(function (d) { return d[0].iter })
       .style('fill', 'gray')
-      .style('font-size', 12);
+      .style('font-size', 12)
 
     this.svg.selectAll('.endPoint')
       .data(props.endPoints)
