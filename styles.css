@@ -324,20 +324,20 @@ span.action {
 /*@import url('https://fonts.googleapis.com/css?family=Open+Sans');*/
 
 body {
-	font-family: sans-serif;
+	font-family: 'Open Sans', sans-serif;
 }
 
 a, a:visited, a:hover {
 	color: black;
 	cursor: pointer;
 	text-decoration: none;
-	box-shadow: inset 0 -3px 0 red;
+	box-shadow: inset 0 -3px 0 #f44336;
 	transition: box-shadow 0.25s ease-out, color 0.25s ease-out;
 }
 
 a:hover {
 	color: white;
-	box-shadow: inset 0 -20px 0 red;
+	box-shadow: inset 0 -20px 0 #f44336;
 }
 
 .card:hover {
@@ -346,13 +346,20 @@ a:hover {
 
 .hed {
 	font-size: 4rem;
-	/* font-family: 'Roboto Slab'; */
-	font-family: sans-serif;
+	font-family: 'Playfair Display';
+	/* font-weight: 300; */
+	/* font-family: sans-serif; */
 	/* text-transform: uppercase; */
 }
 
 .dek {
-	font-weight: 400;
+	font-weight: 300;
+	/* text-transform: uppercase; */
+}
+
+.byline {
+	/* font-weight: 300; */
+	/* text-transform: uppercase; */
 }
 
 button {
@@ -387,5 +394,11 @@ button:focus {
 
 .clear:hover {
 	background-color: #666666;
+}
 
+blockquote {
+	font-style: italic;
+	padding: 18px;
+	font-size: 1.15em;
+	border-left: 5px solid black;
 }
