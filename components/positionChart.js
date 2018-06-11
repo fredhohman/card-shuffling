@@ -4,7 +4,7 @@ const d3 = require('d3');
 
 const chartWidth = 650
 const chartHeight = 300
-const margin = ({ top: 50, right: 50, bottom: 50, left: 50 })
+const margin = ({ top: 50, right: 20, bottom: 50, left: 50 })
 
 const circleRadius = 3;
 const circleOpacity = 1;
@@ -179,18 +179,19 @@ class positionChart extends D3Component {
       .attr("x", function(d) { return xScale(d[0].iter) + 4 })
       .style("text-anchor", "middle")
       .attr('transform', function (d) { return 'rotate(270,' + (xScale(d[0].iter)+4) + ',' + (yScale(52) - 10) + ')' })
-      // .attr('transform', 'rotate(90)')
       .text(function (d) { return d[0].iter })
       .style('fill', 'gray')
       .style('font-size', 12)
 
     this.svg.selectAll('.endPoint')
       .data(props.endPoints)
-      .attr('d', function (d) { return lineGenerator(d) })
+      .attr('d', function (d) { return lineGenerator(d)+4 })
 
     this.svg.selectAll('.endPointLabel')
     .data(props.endPoints)
-      .attr("x", function (d) { return xScale(d[0].iter) })
+      .attr("y", function(d) { return yScale(52) - 10 })
+      .attr("x", function(d) { return xScale(d[0].iter) + 4 })
+      .attr('transform', function (d) { return 'rotate(270,' + (xScale(d[0].iter)+4) + ',' + (yScale(52) - 10) + ')' })
 
     lineGenerator = d3.line().x(function (d) { return xScale(d.x) }).y(function (d) { return yScale(d.y) });
 

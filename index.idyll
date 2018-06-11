@@ -97,13 +97,12 @@ Keep riffling until the [card number:"K" suit:"D"/] moves to the top.
 // [br/]
 [multiRiffle iter:iter points:points ]Riffle (x10)[/multiRiffle]
 You have riffled [Display value:iter /] times.
+[button className:"clear" onClick:`endPoints.push([{iter:iter, position:0}, {iter:iter, position:51}]); iter=-1; points=[{x:0, y:52}]; iter++;`]Clear[/button]
+
 [cardVis iterVar:iter points:points /]
 
-[button className:"clear" onClick:`endPoints.push([{iter:iter, position:0}, {iter:iter, position:51}]); iter=-1; points=[{x:0, y:52}]; iter++;`]Clear[/button]
-// points.push({x:0 ,y:52}
-
 Here's a chart of the [card number:"K" suit:"D"/]'s position in the deck for each riffle iteration.
-Notice how it it takes a long time to move the [card number:"K" suit:"D"/] up just a few positions, but once the [card number:"K" suit:"D"/] starts rising towards the top, it accelerates.
+Notice how it it takes a long time to move the [card number:"K" suit:"D"/] up just a few positions, but once the [card number:"K" suit:"D"/] starts rising towards the top of the deck, it accelerates.
 
 [positionChart iterVal:iter points:points endPoints:endPoints /]
 
