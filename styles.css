@@ -67,3 +67,10 @@ button:focus {
 .clear:hover {
 	background-color: #666666;
 }
+
+blockquote {
+	font-style: italic;
+	padding: 18px;
+	font-size: 1.15em;
+	border-left: 5px solid black;
+}
