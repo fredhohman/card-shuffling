@@ -29,7 +29,6 @@ class cardVis extends D3Component {
   initialize(node, props) {
 
     const svg = this.svg = d3.select(node).append('svg');
-
     svg.attr('viewBox', `0 0 ${size} ${height}`)
       .style('width', '100%')
       .style('height', 'auto');
@@ -39,7 +38,9 @@ class cardVis extends D3Component {
       .enter()
       .append('rect')
       .attr('class', 'card')
-      .attr('x', function (d, i) { return 40 + i % 13 * 45 - 10; })
+      .attr('x', function (d, i) {
+        return 40 + i % 13 * 45 - 10;
+      })
       .attr('y', function (d, i) {
         if (i < (cards.length - 1) * (1 / 4)) {
           return height * (1 / 5) - 16;
@@ -61,7 +62,7 @@ class cardVis extends D3Component {
           return '#FFFFFF'
         } else {
           if (d === 'K♦') {
-            return 'red';
+            return '#f44336';
           } else {
             return '#FFFFFF';
           }
@@ -103,17 +104,17 @@ class cardVis extends D3Component {
             return 'black';
           }
           if ((d[d.length - 1] === suits[2]) || (d[d.length - 1] === suits[3])) {
-            return 'red';
+            return '#f44336';
           }
         } else {
           if (d === 'K♦') {
-            return 'white';
+            return '#FFFFFF';
           }
           if ((d[d.length - 1] === suits[0]) || (d[d.length - 1] === suits[1])) {
             return 'black';
           }
           if ((d[d.length - 1] === suits[2]) || (d[d.length - 1] === suits[3])) {
-            return 'red';
+            return '#f44336';
           }
         }
       })
@@ -124,13 +125,14 @@ class cardVis extends D3Component {
   update(props) {
 
     if (propsUpdated === false) {
-      
+
       if (props.iterVar === 0) {
         cards = makeCards(suits, cardPrimitives);
-        console.log(cards)
+        // console.log(cards)
       }
 
       let lastPoint = props.points[props.points.length - 1];
+
       if (lastPoint.y !== 1) {
         propsUpdated = true;
 
@@ -148,7 +150,7 @@ class cardVis extends D3Component {
           .data(cards)
           .attr('fill', function (d) {
             if (d === 'K♦') {
-              return 'red';
+              return '#f44336';
             } else {
               return '#FFFFFF';
             }
@@ -159,13 +161,13 @@ class cardVis extends D3Component {
           .text(function (d) { return d; })
           .attr('fill', function (d) {
             if (d === 'K♦') {
-              return 'white';
+              return '#FFFFFF';
             }
             if ((d[d.length - 1] === suits[0]) || (d[d.length - 1] === suits[1])) {
               return 'black';
             }
             if ((d[d.length - 1] === suits[2]) || (d[d.length - 1] === suits[3])) {
-              return 'red';
+              return '#f44336';
             }
           });
 
@@ -180,7 +182,6 @@ class cardVis extends D3Component {
             x: newXValue,
             y: newYValue
           }])
-          // iter: props.iter + 1
         });
       }
     } else {
