@@ -81,3 +81,8 @@ blockquote {
 	font-size: 1.15em;
 	border-left: 5px solid black;
 }
+
+.hed {
+	width: 100%;
+	line-height: 4.5rem;
+}
