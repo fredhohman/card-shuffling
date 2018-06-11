@@ -3,7 +3,7 @@
 /*@import url('https://fonts.googleapis.com/css?family=Open+Sans');*/
 
 body {
-	font-family: sans-serif;
+	font-family: 'Open Sans', sans-serif;
 }
 
 a, a:visited, a:hover {
@@ -25,13 +25,20 @@ a:hover {
 
 .hed {
 	font-size: 4rem;
-	/* font-family: 'Roboto Slab'; */
+	font-family: 'Playfair Display';
+	/* font-weight: 300; */
 	/* font-family: sans-serif; */
 	/* text-transform: uppercase; */
 }
 
 .dek {
-	font-weight: 400;
+	font-weight: 300;
+	/* text-transform: uppercase; */
+}
+
+.byline {
+	/* font-weight: 300; */
+	/* text-transform: uppercase; */
 }
 
 button {
