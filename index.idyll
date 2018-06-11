@@ -25,7 +25,7 @@ Riffle seven times and we will have a a sufficient random ordering of cards, an 
 
 I found this result from a [a href:"https://www.youtube.com/watch?v=AxJubaijQbI"]2015 Numberphile video[/a], in which a number of interesting card shuffling facts are presented. 
 However, one caught my attention.
-Instead of a standard riffle using a deck roughly splitin half, what if you were to only riffle *1 card at a time?*
+Instead of a standard riffle using a deck roughly split in half, what if you were to only riffle *1 card at a time?*
 That is, using a standard deck of 52 cards, in one hand hold we would hold 51 cards and in the other hold the remaining single card.
 Now riffle these together.
 This is equivalent to taking one card and placing it at random inside of the deck.
@@ -53,7 +53,7 @@ Our new top card then becomes [card number:"2" suit:"S"/].
 If we continue this procedure of taking the top card and randomly placing somewhere else in the deck, eventually we'll place the top card at the very bottom of the deck, which means our original bottom card, the [card number:"K" suit:"D"/], is now the penultimate card in the deck, i.e., the 51st card from the top.
 Since for every top card we move has a [Equation]\frac{1}{52}[/Equation] chance of moving to any new position in the deck, that means, on average, after about 52 top card riffles, the top card will become the new bottom card.
 
-Now, once the original bottom card, the [card number:"K" suit:"D"/], moves up one potision, if we do another top card riffle, there will now be two spots the new top card can be palced that is underneath the [card number:"K" suit:"D"/], i.e., a [Equation]\frac{1}{52}+\frac{1}{52}=\frac{2}{52}[/Equation] chance of going underneath.
+Now, once the original bottom card, the [card number:"K" suit:"D"/], moves up one position, if we do another top card riffle, there will now be two spots the new top card can be placed that is underneath the [card number:"K" suit:"D"/], i.e., a [Equation]\frac{1}{52}+\frac{1}{52}=\frac{2}{52}[/Equation] chance of going underneath.
 
 [aside]
 **Note:** notice the [card number:"K" suit:"D"/] can only rise in the deck.
@@ -63,7 +63,7 @@ There are two cases:
 [/aside]
 
 If we continue this procedure, our original bottom card, the [card number:"K" suit:"D"/], will eventually become the top card of our deck.
-Once this last card from our oriignal ordered deck is shuffled into the deck, we now have a randomly shuffled deck, that is, this deck's order is equally likely to any other order.
+Once this last card from our original ordered deck is shuffled into the deck, we now have a randomly shuffled deck, that is, this deck's order is equally likely to any other order.
 
 So, how many single card riffles does this take?
 Recall each time a card is placed underneath the [card number:"K" suit:"D"/], out chances of placing another card increases by [Equation]\frac{1}{52}[/Equation].
