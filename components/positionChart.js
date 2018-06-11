@@ -26,7 +26,8 @@ class positionChart extends D3Component {
     const svg = this.svg = d3.select(node).append('svg');
     svg.attr('viewBox', `0 0 ${chartWidth} ${chartHeight}`)
       .style('width', '100%')
-      .style('height', 'auto');
+      .style('height', 'auto')
+      .style('overflow', 'visible');
 
     let xAxis = d3.axisBottom(xScale)
     let yAxis = d3.axisLeft(yScale)
