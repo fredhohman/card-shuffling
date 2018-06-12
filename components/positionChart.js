@@ -60,7 +60,7 @@ class positionChart extends D3Component {
       .enter().append("circle")
       .attr('class', 'point')
       .attr("cx", d => xScale(d.x))
-      .attr("cy", d => yScale(d.y))
+      .attr("cy", d => yScale(52 - d.y))
       .attr("r", circleRadius)
       .attr("opacity", circleOpacity);
 
@@ -119,7 +119,7 @@ class positionChart extends D3Component {
       .append('text')
       .text('K♦')
       .attr('x', xScale(0) + 5)
-      .attr('y', yScale(52) - 5)
+      .attr('y', yScale(0) - 5)
       .attr('id', 'chart-annotation')
       .attr('fill', '#f44336')
       .style('font-weight', 700)
@@ -140,20 +140,33 @@ class positionChart extends D3Component {
       .enter().append("circle")
       .attr('class', 'point')
       .attr("cx", d => xScale(d.x))
-      .attr("cy", d => yScale(d.y))
+      .attr("cy", d => yScale(52 - d.y))
       .attr("r", circleRadius)
       .attr("opacity", circleOpacity);
 
     this.svg.selectAll('circle')
       .data(props.points)
       .attr("cx", d => xScale(d.x))
-      .attr("cy", d => yScale(d.y))
+      .attr("cy", d => yScale(52 - d.y))
       .attr("r", circleRadius)
-      .attr("opacity", circleOpacity);
+      .attr("opacity", circleOpacity)
+      .attr("fill", function (d) {
+        if (d.y === 1) {
+          return '#f44336'
+        }
+      })
+      .attr("r", function (d) {
+        if (d.y === 1) {
+          return 2*circleRadius;
+        } else {
+          return circleRadius;
+        }
+      });
+
 
     this.svg.select('#chart-annotation')
       .attr('x', xScale(newestPoint.x) + 5)
-      .attr('y', yScale(newestPoint.y) - 5)
+      .attr('y', yScale(52 - newestPoint.y) - 5)
 
     let lineGenerator = d3.line().x(function (d) { return xScale(d.iter) }).y(function (d) { return yScale(d.position) });
 
