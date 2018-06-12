@@ -10,7 +10,7 @@ const circleRadius = 3;
 const circleOpacity = 1;
 
 let xScale = d3.scaleLinear()
-  .domain([0, 300])
+  .domain([0, 320])
   .range([margin.left, chartWidth - margin.right])
 
 let yScale = d3.scaleLinear()
@@ -18,7 +18,9 @@ let yScale = d3.scaleLinear()
   .range([chartHeight - margin.bottom, margin.top])
 
 let lineData = [{ x: 235, y: 1 }, { x: 235, y: 52 }];
-let topLineData = [{ x: 0, y: 1 }, { x: 300, y: 1 }];
+let topLineData = [{ x: 0, y: 1 }, { x: 320, y: 1 }];
+
+const expectedLabelInitHeight = 75;
 
 class positionChart extends D3Component {
 
@@ -28,6 +30,7 @@ class positionChart extends D3Component {
     svg.attr('viewBox', `0 0 ${chartWidth} ${chartHeight}`)
       .style('width', '100%')
       .style('height', 'auto');
+      // .style('overflow', 'visible');
 
     let xAxis = d3.axisBottom(xScale)
     let yAxis = d3.axisLeft(yScale)
@@ -101,21 +104,41 @@ class positionChart extends D3Component {
     svg.append("g")
       .append('path')
       .attr('d', annotationLineGenerator(lineData))
-      .style("stroke-dasharray", ("4, 4"))
+      .style("stroke-dasharray", ("6, 6"))
       .attr('stroke', '#f44336')
-      .attr('stroke-width', 1)
+      .attr('stroke-width', 3)
       .attr('fill', 'none')
-      .attr('id', 'expected-riffle-count')
+      .attr('id', 'expected-riffle-count');
 
     svg.append("text")
-      .attr('id', 'expected-riffle-count-label')
-      .attr("transform", "rotate(-90)")
-      .attr("y", xScale(235 - 3))
-      .attr("x", 0 - ((chartHeight) / 2))
-      // .attr("dy", "1em")
+      .attr('id', 'expected-riffle-count-label-1')
+      .attr('class', 'expected-riffle-count-label')
+      .attr("x", xScale(240))
+      .attr("y", margin.top + expectedLabelInitHeight)
       .style("text-anchor", "start")
-      .text("expected riffle count")
-      .style('fill', '#f44336');
+      .text("Expected number of riffles")
+      .style('fill', '#aaaaaa')
+      .style('font-size', '13px');
+
+    svg.append("text")
+      .attr('id', 'expected-riffle-count-label-2')
+      .attr('class', 'expected-riffle-count-label')
+      .attr("x", xScale(240))
+      .attr("y", margin.top + expectedLabelInitHeight + 15)
+      .style("text-anchor", "start")
+      .text("before the king reaches")
+      .style('fill', '#aaaaaa')
+      .style('font-size', '13px');
+
+    svg.append("text")
+      .attr('id', 'expected-riffle-count-label-3')
+      .attr('class', 'expected-riffle-count-label')
+      .attr("x", xScale(240))
+      .attr("y", margin.top + expectedLabelInitHeight + 15*2)
+      .style("text-anchor", "start")
+      .text("the top of the deck")
+      .style('fill', '#aaaaaa')
+      .style('font-size', '13px');
 
     // annotation
     svg.append("g")
@@ -125,7 +148,7 @@ class positionChart extends D3Component {
       .attr('y', yScale(52) - 5)
       .attr('id', 'chart-annotation')
       .attr('fill', '#f44336')
-      .style('font-weight', 700)
+      .style('font-weight', 700);
 
     svg.append("g")
       .append('path')
@@ -133,14 +156,38 @@ class positionChart extends D3Component {
       .attr('stroke', '#cccccc')
       .attr('stroke-width', 1)
       .attr('fill', 'none')
-      .attr('id', 'top-position')
+      .attr('id', 'top-position');
+
+    svg.append("text")
+      .attr("x", xScale(100))
+      .attr("y", 100)
+      .style("text-anchor", "start")
+      .html("The king is at the top")
+      .attr('fill', '#aaaaaa')
+      .style('font-size', '14px');
+
+    svg.append("text")
+      .attr("x", xScale(100))
+      .attr("y", 100+15)
+      .style("text-anchor", "start")
+      .html("when it reaches this line.")
+      .attr('fill', '#aaaaaa')
+      .style('font-size', '14px');
+
+    svg.append("path")
+      .attr("d", "M160,160a80,80,0,0,1,60,-60")
+      .style('fill', 'none')
+      .style("stroke", 'black')
+      .style('stroke-width', '3px')
+
+
   }
-  
+
 
   update(props) {
 
     let newestPoint = props.points[props.points.length - 1]
-    xScale.domain([0, d3.max([300, newestPoint.x])]);
+    xScale.domain([0, d3.max([320, newestPoint.x])]);
     d3.select('#x-axis').call(d3.axisBottom(xScale))
 
     if (props.iterVal === 0) {
@@ -162,18 +209,18 @@ class positionChart extends D3Component {
       .attr("cy", d => yScale(d.y))
       .attr("r", circleRadius)
       .attr("opacity", circleOpacity)
-      // .attr("fill", function (d) {
-      //   if (d.y === 1) {
-      //     return '#f44336'
-      //   }
-      // })
-      // .attr("r", function (d) {
-      //   if (d.y === 1) {
-      //     return 2*circleRadius;
-      //   } else {
-      //     return circleRadius;
-      //   }
-      // });
+    // .attr("fill", function (d) {
+    //   if (d.y === 1) {
+    //     return '#f44336'
+    //   }
+    // })
+    // .attr("r", function (d) {
+    //   if (d.y === 1) {
+    //     return 2*circleRadius;
+    //   } else {
+    //     return circleRadius;
+    //   }
+    // });
 
     this.svg.select('#chart-annotation')
       .attr('x', xScale(newestPoint.x) + 5)
@@ -222,8 +269,8 @@ class positionChart extends D3Component {
 
     let annotationLineGenerator = d3.line().x(function (d) { return xScale(d.x) }).y(function (d) { return yScale(d.y) });
 
-    this.svg.select('#expected-riffle-count-label')
-      .attr("y", xScale(235 - 3))
+    this.svg.selectAll('.expected-riffle-count-label')
+      .attr("x", xScale(240))
 
     this.svg.select('#expected-riffle-count')
       .attr('d', annotationLineGenerator(lineData))
