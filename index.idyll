@@ -96,7 +96,7 @@ Keep riffling until the [card number:"K" suit:"D"/] moves to the top.
 [var name:"endPoints" value:`[]` /]
 
 [aside]
-You have riffled **[Display value:iter /]** times.
+You have riffled **[Display value:iter format:"d" /]** times.
 [br/]
 [button onClick:`if(points[points.length-1].y !== 1){iter++}`]Riffle[/button]
 [multiRiffle iter:iter points:points ]Riffle (x10)[/multiRiffle]
