@@ -3,8 +3,8 @@ const D3Component = require('idyll-d3-component');
 const d3 = require('d3');
 
 const chartWidth = 650
-const chartHeight = 300
-const margin = ({ top: 50, right: 20, bottom: 50, left: 50 })
+const chartHeight = 400
+const margin = ({ top: 150, right: 20, bottom: 50, left: 50 })
 
 const circleRadius = 3;
 const circleOpacity = 1;
@@ -14,10 +14,11 @@ let xScale = d3.scaleLinear()
   .range([margin.left, chartWidth - margin.right])
 
 let yScale = d3.scaleLinear()
-  .domain([0, 53])
+  .domain([52, 1])
   .range([chartHeight - margin.bottom, margin.top])
 
-let lineData = [{ x: 235, y: 0 }, { x: 235, y: 51 }];
+let lineData = [{ x: 235, y: 1 }, { x: 235, y: 52 }];
+let topLineData = [{ x: 0, y: 1 }, { x: 300, y: 1 }];
 
 class positionChart extends D3Component {
 
@@ -60,7 +61,7 @@ class positionChart extends D3Component {
       .enter().append("circle")
       .attr('class', 'point')
       .attr("cx", d => xScale(d.x))
-      .attr("cy", d => yScale(52 - d.y))
+      .attr("cy", d => yScale(d.y))
       .attr("r", circleRadius)
       .attr("opacity", circleOpacity);
 
@@ -94,11 +95,13 @@ class positionChart extends D3Component {
     // halfcircle(xScale(235), yScale(0), 30).attr('fill', "#cccccc")
     // halfcircle(xScale(235), yScale(0), 10).attr('fill', "#444444")
 
-    let lineGenerator = d3.line().x(function (d) { return xScale(d.x) }).y(function (d) { return yScale(d.y) });
+    let annotationLineGenerator = d3.line().x(function (d) { return xScale(d.x) }).y(function (d) { return yScale(d.y) });
+    let topLineGenerator = d3.line().x(function (d) { return xScale(d.x) }).y(function (d) { return yScale(d.y) });
 
     svg.append("g")
       .append('path')
-      .attr('d', lineGenerator(lineData))
+      .attr('d', annotationLineGenerator(lineData))
+      .style("stroke-dasharray", ("4, 4"))
       .attr('stroke', '#f44336')
       .attr('stroke-width', 1)
       .attr('fill', 'none')
@@ -108,9 +111,9 @@ class positionChart extends D3Component {
       .attr('id', 'expected-riffle-count-label')
       .attr("transform", "rotate(-90)")
       .attr("y", xScale(235 - 3))
-      .attr("x", 0 - (chartHeight / 2))
+      .attr("x", 0 - ((chartHeight) / 2))
       // .attr("dy", "1em")
-      .style("text-anchor", "middle")
+      .style("text-anchor", "start")
       .text("expected riffle count")
       .style('fill', '#f44336');
 
@@ -119,11 +122,20 @@ class positionChart extends D3Component {
       .append('text')
       .text('K♦')
       .attr('x', xScale(0) + 5)
-      .attr('y', yScale(0) - 5)
+      .attr('y', yScale(52) - 5)
       .attr('id', 'chart-annotation')
       .attr('fill', '#f44336')
       .style('font-weight', 700)
+
+    svg.append("g")
+      .append('path')
+      .attr('d', topLineGenerator(topLineData))
+      .attr('stroke', '#cccccc')
+      .attr('stroke-width', 1)
+      .attr('fill', 'none')
+      .attr('id', 'top-position')
   }
+  
 
   update(props) {
 
@@ -140,35 +152,34 @@ class positionChart extends D3Component {
       .enter().append("circle")
       .attr('class', 'point')
       .attr("cx", d => xScale(d.x))
-      .attr("cy", d => yScale(52 - d.y))
+      .attr("cy", d => yScale(d.y))
       .attr("r", circleRadius)
       .attr("opacity", circleOpacity);
 
     this.svg.selectAll('circle')
       .data(props.points)
       .attr("cx", d => xScale(d.x))
-      .attr("cy", d => yScale(52 - d.y))
+      .attr("cy", d => yScale(d.y))
       .attr("r", circleRadius)
       .attr("opacity", circleOpacity)
-      .attr("fill", function (d) {
-        if (d.y === 1) {
-          return '#f44336'
-        }
-      })
-      .attr("r", function (d) {
-        if (d.y === 1) {
-          return 2*circleRadius;
-        } else {
-          return circleRadius;
-        }
-      });
-
+      // .attr("fill", function (d) {
+      //   if (d.y === 1) {
+      //     return '#f44336'
+      //   }
+      // })
+      // .attr("r", function (d) {
+      //   if (d.y === 1) {
+      //     return 2*circleRadius;
+      //   } else {
+      //     return circleRadius;
+      //   }
+      // });
 
     this.svg.select('#chart-annotation')
       .attr('x', xScale(newestPoint.x) + 5)
-      .attr('y', yScale(52 - newestPoint.y) - 5)
+      .attr('y', yScale(newestPoint.y) - 5)
 
-    let lineGenerator = d3.line().x(function (d) { return xScale(d.iter) }).y(function (d) { return yScale(d.position) });
+    let clearLineGenerator = d3.line().x(function (d) { return xScale(d.iter) }).y(function (d) { return yScale(d.position) });
 
     this.svg.selectAll('.endPoint')
       .data(props.endPoints)
@@ -176,7 +187,12 @@ class positionChart extends D3Component {
       .append("g")
       .append('path')
       .attr('class', 'endPoint')
-      .attr('d', function (d) { return lineGenerator(d) })
+      .attr('d', function (d) {
+        console.log(d);
+        console.log(xScale(d.iter));
+        console.log(yScale(d.position));
+        return clearLineGenerator(d)
+      })
       .attr('stroke', 'gray')
       .attr('stroke-width', 1)
       .attr('fill', 'none')
@@ -186,31 +202,31 @@ class positionChart extends D3Component {
       .enter()
       .append("text")
       .attr('class', 'endPointLabel')
-      .attr("y", function (d) { return yScale(52) - 10 })
+      .attr("y", function (d) { return yScale(1) - 13 })
       .attr("x", function (d) { return xScale(d[0].iter) + 4 })
       .style("text-anchor", "middle")
-      .attr('transform', function (d) { return 'rotate(270,' + (xScale(d[0].iter) + 4) + ',' + (yScale(52) - 10) + ')' })
+      .attr('transform', function (d) { return 'rotate(270,' + (xScale(d[0].iter) + 4) + ',' + (yScale(1) - 13) + ')' })
       .text(function (d) { return d[0].iter })
       .style('fill', 'gray')
       .style('font-size', 12)
 
     this.svg.selectAll('.endPoint')
       .data(props.endPoints)
-      .attr('d', function (d) { return lineGenerator(d) + 4 })
+      .attr('d', function (d) { return clearLineGenerator(d) })
 
     this.svg.selectAll('.endPointLabel')
       .data(props.endPoints)
-      .attr("y", function (d) { return yScale(52) - 10 })
+      .attr("y", function (d) { return yScale(1) - 13 })
       .attr("x", function (d) { return xScale(d[0].iter) + 4 })
-      .attr('transform', function (d) { return 'rotate(270,' + (xScale(d[0].iter) + 4) + ',' + (yScale(52) - 10) + ')' })
+      .attr('transform', function (d) { return 'rotate(270,' + (xScale(d[0].iter) + 4) + ',' + (yScale(1) - 13) + ')' })
 
-    lineGenerator = d3.line().x(function (d) { return xScale(d.x) }).y(function (d) { return yScale(d.y) });
+    let annotationLineGenerator = d3.line().x(function (d) { return xScale(d.x) }).y(function (d) { return yScale(d.y) });
 
     this.svg.select('#expected-riffle-count-label')
       .attr("y", xScale(235 - 3))
 
     this.svg.select('#expected-riffle-count')
-      .attr('d', lineGenerator(lineData))
+      .attr('d', annotationLineGenerator(lineData))
 
   }
 }

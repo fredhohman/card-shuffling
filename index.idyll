@@ -109,7 +109,7 @@ Notice how it takes a long time to move the [card number:"K" suit:"D"/] up just 
 
 [aside]
 Once the [card number:"K" suit:"D"/] is the top card, click the **Clear** button to try again.
-[button className:"clear" onClick:`endPoints.push([{iter:iter, position:0}, {iter:iter, position:51}]); iter=-1; points=[{x:0, y:52}]; iter++;`]Clear[/button]
+[button className:"clear" onClick:`endPoints.push([{iter:iter, position:1}, {iter:iter, position:52}]); iter=-1; points=[{x:0, y:52}]; iter++;`]Clear[/button]
 [/aside]
 [positionChart iterVal:iter points:points endPoints:endPoints /]
 
