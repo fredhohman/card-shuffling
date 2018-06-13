@@ -11,9 +11,7 @@
     "d3": "^4.0.0",
     "d3-svg-annotation": "^2.2.5",
     "idyll": "^2.0.0",
-    "idyll-d3-component": "^2.0.0",
-    "vega": "^4.0.0-rc.2",
-    "vega-lite": "^2.4.3"
+    "idyll-d3-component": "^2.0.0"
   },
   "devDependencies": {
     "gh-pages": "^0.12.0"
