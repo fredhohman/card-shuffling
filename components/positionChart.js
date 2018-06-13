@@ -41,7 +41,7 @@ let annotations = [{
   },
   data: { iter: 235, position: 15 },
   dy: 90,
-  dx: 50,
+  dx: 35,
   connector: { end: "arrow" },
   color: '#aaaaaa'
 }]

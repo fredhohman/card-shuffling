@@ -78,7 +78,7 @@ We can calculate the number of riffles it would take.
   \sum_{i=1}^{52} \frac{52}{i} = \frac{52}{1} + \frac{52}{2} + \frac{52}{3} + ... + \frac{52}{52} \approx 235
 [/Equation]
 
-On average, after 235 single card riffles will randomly shuffle a deck of cards.
+On average, 235 single card riffles will randomly shuffle a deck of cards.
 
 ## Let's Riffle
 Equations are great, but let's visualize this!
