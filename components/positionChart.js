@@ -244,8 +244,10 @@ class positionChart extends D3Component {
     this.svg.select('#expected-riffle-count')
       .attr('d', annotationLineGenerator(lineData))
 
-    this.svg.select()
-      .attr('id', 'expected-riffle-count-label')
+    this.svg.select('#expected-riffle-count-label')
+      .attr("x", xScale(235) + 4)
+      .attr('transform', function (d) { return 'rotate(270,' + (xScale(235) + 4) + ',' + (yScale(1) - 25) + ')' })
+
 
   }
 }
