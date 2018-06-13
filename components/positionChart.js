@@ -7,7 +7,7 @@ const chartWidth = 650
 const chartHeight = 425
 const margin = ({ top: 110, right: 20, bottom: 50, left: 50 })
 
-const circleRadius = 4;
+const circleRadius = 3;
 const circleOpacity = 1;
 
 let xScale = d3.scaleLinear()
@@ -18,7 +18,7 @@ let yScale = d3.scaleLinear()
   .domain([52, 1])
   .range([chartHeight - margin.bottom, margin.top])
 
-let lineData = [{ x: 235, y: 1 }, { x: 235, y: 52 }];
+let lineData = [{ x: 235, y: -1 }, { x: 235, y: 52 }];
 let topLineData = [{ x: 0, y: 1 }, { x: 320, y: 1 }];
 
 const expectedLabelInitHeight = 75;
@@ -28,9 +28,7 @@ const type = annotation.annotationCalloutElbow
 let annotations = [{
   note: {
     label: "The king is at the top when it reaches this line"
-    // title: "Top of the deck"
   },
-  //can use x, y directly instead of data
   data: { iter: 140, position: 1 },
   dy: -40,
   dx: -130,
@@ -40,9 +38,7 @@ let annotations = [{
 {
   note: {
     label: "Expected number of riffles before the king reaches the top"
-    // title: "Top of the deck"
   },
-  //can use x, y directly instead of data
   data: { iter: 235, position: 15 },
   dy: 90,
   dx: 50,
@@ -51,10 +47,8 @@ let annotations = [{
 }]
 
 const makeAnnotations = annotation.annotation()
-  .editMode(true)
+  // .editMode(true)
   .type(type)
-  //accessors & accessorsInverse not needed
-  //if using x, y in annotations JSON
   .accessors({
     x: d => xScale(d.iter),
     y: d => yScale(d.position)
@@ -124,7 +118,17 @@ class positionChart extends D3Component {
       .attr('fill', 'none')
       .attr('id', 'expected-riffle-count');
 
-    // annotation
+    svg.append("g")
+      .append("text")
+      .attr('id', 'expected-riffle-count-label')
+      .attr("y", yScale(1) - 25)
+      .attr("x", xScale(235) + 4)
+      .style("text-anchor", "middle")
+      .attr('transform', function (d) { return 'rotate(270,' + (xScale(235) + 4) + ',' + (yScale(1) - 25) + ')' })
+      .text("235")
+      .style('fill', '#f44336')
+      .style('font-size', 12)
+
     svg.append("g")
       .append('text')
       .text('K♦')
@@ -148,7 +152,6 @@ class positionChart extends D3Component {
       .style('font-size', '14px')
       .call(makeAnnotations)
   }
-
 
   update(props) {
 
