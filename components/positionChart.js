@@ -85,7 +85,7 @@ class positionChart extends D3Component {
     svg.append("text")
       .attr("transform", "rotate(-90)")
       .attr("y", margin.left / 2)
-      .attr("x", 0 - (chartHeight / 2))
+      .attr("x", 0 - (chartHeight / 2)-30)
       .style("text-anchor", "middle")
       .text("position");
 
@@ -243,6 +243,9 @@ class positionChart extends D3Component {
 
     this.svg.select('#expected-riffle-count')
       .attr('d', annotationLineGenerator(lineData))
+
+    this.svg.select()
+      .attr('id', 'expected-riffle-count-label')
 
   }
 }
