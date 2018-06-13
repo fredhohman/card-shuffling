@@ -1,12 +1,13 @@
 const React = require('react');
 const D3Component = require('idyll-d3-component');
 const d3 = require('d3');
+const annotation = require('d3-svg-annotation')
 
 const chartWidth = 650
-const chartHeight = 400
-const margin = ({ top: 150, right: 20, bottom: 50, left: 50 })
+const chartHeight = 425
+const margin = ({ top: 110, right: 20, bottom: 50, left: 50 })
 
-const circleRadius = 3;
+const circleRadius = 4;
 const circleOpacity = 1;
 
 let xScale = d3.scaleLinear()
@@ -22,6 +23,49 @@ let topLineData = [{ x: 0, y: 1 }, { x: 320, y: 1 }];
 
 const expectedLabelInitHeight = 75;
 
+const type = annotation.annotationCalloutElbow
+
+let annotations = [{
+  note: {
+    label: "The king is at the top when it reaches this line"
+    // title: "Top of the deck"
+  },
+  //can use x, y directly instead of data
+  data: { iter: 140, position: 1 },
+  dy: -40,
+  dx: -130,
+  connector: { end: "arrow" },
+  color: '#aaaaaa'
+},
+{
+  note: {
+    label: "Expected number of riffles before the king reaches the top"
+    // title: "Top of the deck"
+  },
+  //can use x, y directly instead of data
+  data: { iter: 235, position: 15 },
+  dy: 90,
+  dx: 50,
+  connector: { end: "arrow" },
+  color: '#aaaaaa'
+}]
+
+const makeAnnotations = annotation.annotation()
+  .editMode(true)
+  .type(type)
+  //accessors & accessorsInverse not needed
+  //if using x, y in annotations JSON
+  .accessors({
+    x: d => xScale(d.iter),
+    y: d => yScale(d.position)
+  })
+  .accessorsInverse({
+    iter: d => xScale.invert(d.x),
+    position: d => yScale.invert(d.y)
+  })
+  .annotations(annotations)
+
+
 class positionChart extends D3Component {
 
   initialize(node, props) {
@@ -30,7 +74,7 @@ class positionChart extends D3Component {
     svg.attr('viewBox', `0 0 ${chartWidth} ${chartHeight}`)
       .style('width', '100%')
       .style('height', 'auto');
-      // .style('overflow', 'visible');
+    // .style('overflow', 'visible');
 
     let xAxis = d3.axisBottom(xScale)
     let yAxis = d3.axisLeft(yScale)
@@ -68,36 +112,6 @@ class positionChart extends D3Component {
       .attr("r", circleRadius)
       .attr("opacity", circleOpacity);
 
-    var arc = d3.arc();
-
-    var halfcircle = function (x, y, rad) {
-      return svg.append('path')
-        .attr('transform', 'translate(' + [x, y] + ')')
-        .attr('d', arc({
-          innerRadius: 0,
-          outerRadius: rad,
-          startAngle: -Math.PI * 0.5,
-          endAngle: Math.PI * 0.5
-        }));
-    }
-
-    // estimate annotation
-    var radialGradient = svg.append("defs")
-      .append("radialGradient")
-      .attr("id", "radial-gradient");
-
-    radialGradient.append("stop")
-      .attr("offset", "0%")
-      .attr("stop-color", "#f44336");
-
-    radialGradient.append("stop")
-      .attr("offset", "100%")
-      .attr("stop-color", "#fff");
-
-    // halfcircle(xScale(235), yScale(0), 50).attr('fill', "#eeeeee")
-    // halfcircle(xScale(235), yScale(0), 30).attr('fill', "#cccccc")
-    // halfcircle(xScale(235), yScale(0), 10).attr('fill', "#444444")
-
     let annotationLineGenerator = d3.line().x(function (d) { return xScale(d.x) }).y(function (d) { return yScale(d.y) });
     let topLineGenerator = d3.line().x(function (d) { return xScale(d.x) }).y(function (d) { return yScale(d.y) });
 
@@ -109,36 +123,6 @@ class positionChart extends D3Component {
       .attr('stroke-width', 3)
       .attr('fill', 'none')
       .attr('id', 'expected-riffle-count');
-
-    svg.append("text")
-      .attr('id', 'expected-riffle-count-label-1')
-      .attr('class', 'expected-riffle-count-label')
-      .attr("x", xScale(240))
-      .attr("y", margin.top + expectedLabelInitHeight)
-      .style("text-anchor", "start")
-      .text("Expected number of riffles")
-      .style('fill', '#aaaaaa')
-      .style('font-size', '13px');
-
-    svg.append("text")
-      .attr('id', 'expected-riffle-count-label-2')
-      .attr('class', 'expected-riffle-count-label')
-      .attr("x", xScale(240))
-      .attr("y", margin.top + expectedLabelInitHeight + 15)
-      .style("text-anchor", "start")
-      .text("before the king reaches")
-      .style('fill', '#aaaaaa')
-      .style('font-size', '13px');
-
-    svg.append("text")
-      .attr('id', 'expected-riffle-count-label-3')
-      .attr('class', 'expected-riffle-count-label')
-      .attr("x", xScale(240))
-      .attr("y", margin.top + expectedLabelInitHeight + 15*2)
-      .style("text-anchor", "start")
-      .text("the top of the deck")
-      .style('fill', '#aaaaaa')
-      .style('font-size', '13px');
 
     // annotation
     svg.append("g")
@@ -158,29 +142,11 @@ class positionChart extends D3Component {
       .attr('fill', 'none')
       .attr('id', 'top-position');
 
-    svg.append("text")
-      .attr("x", xScale(100))
-      .attr("y", 100)
-      .style("text-anchor", "start")
-      .html("The king is at the top")
-      .attr('fill', '#aaaaaa')
-      .style('font-size', '14px');
-
-    svg.append("text")
-      .attr("x", xScale(100))
-      .attr("y", 100+15)
-      .style("text-anchor", "start")
-      .html("when it reaches this line.")
-      .attr('fill', '#aaaaaa')
-      .style('font-size', '14px');
-
-    svg.append("path")
-      .attr("d", "M160,160a80,80,0,0,1,60,-60")
-      .style('fill', 'none')
-      .style("stroke", 'black')
-      .style('stroke-width', '3px')
-
-
+    svg.append("g")
+      .attr("class", "annotation-group")
+      .style('font-family', 'Playfair Display')
+      .style('font-size', '14px')
+      .call(makeAnnotations)
   }
 
 
@@ -241,7 +207,7 @@ class positionChart extends D3Component {
         return clearLineGenerator(d)
       })
       .attr('stroke', 'gray')
-      .attr('stroke-width', 1)
+      .attr('stroke-width', 2)
       .attr('fill', 'none')
 
     this.svg.selectAll('.endPointLabel')
@@ -249,10 +215,10 @@ class positionChart extends D3Component {
       .enter()
       .append("text")
       .attr('class', 'endPointLabel')
-      .attr("y", function (d) { return yScale(1) - 13 })
+      .attr("y", function (d) { return yScale(1) - 25 })
       .attr("x", function (d) { return xScale(d[0].iter) + 4 })
       .style("text-anchor", "middle")
-      .attr('transform', function (d) { return 'rotate(270,' + (xScale(d[0].iter) + 4) + ',' + (yScale(1) - 13) + ')' })
+      .attr('transform', function (d) { return 'rotate(270,' + (xScale(d[0].iter) + 4) + ',' + (yScale(1) - 25) + ')' })
       .text(function (d) { return d[0].iter })
       .style('fill', 'gray')
       .style('font-size', 12)
@@ -263,9 +229,9 @@ class positionChart extends D3Component {
 
     this.svg.selectAll('.endPointLabel')
       .data(props.endPoints)
-      .attr("y", function (d) { return yScale(1) - 13 })
+      .attr("y", function (d) { return yScale(1) - 25 })
       .attr("x", function (d) { return xScale(d[0].iter) + 4 })
-      .attr('transform', function (d) { return 'rotate(270,' + (xScale(d[0].iter) + 4) + ',' + (yScale(1) - 13) + ')' })
+      .attr('transform', function (d) { return 'rotate(270,' + (xScale(d[0].iter) + 4) + ',' + (yScale(1) - 25) + ')' })
 
     let annotationLineGenerator = d3.line().x(function (d) { return xScale(d.x) }).y(function (d) { return yScale(d.y) });
 
