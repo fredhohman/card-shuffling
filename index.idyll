@@ -27,7 +27,7 @@ We can calculate the number of orderings of a deck of cards using the notion of 
 To find all arrangements of 52 cards in a deck, we compute **52!**, which happens to be a [really big number](http://www.wolframalpha.com/input/?i=52!).
 [/aside]
 
-Riffle seven times and we you'll have a sufficiently random ordering of cards, an ordering that has likely [never existed before](http://www.murderousmaths.co.uk/cardperms.htm).
+Riffle seven times and you'll have a sufficiently random ordering of cards, an ordering that has likely [never existed before](http://www.murderousmaths.co.uk/cardperms.htm).
 In other words, it's unlikely you'll ever shuffle two decks the same.
 
 The card shuffling result appears in a [Numberphile video from 2015](https://www.youtube.com/watch?v=AxJubaijQbI), along with a number of other card shuffling facts.
