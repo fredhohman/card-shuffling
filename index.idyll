@@ -8,9 +8,13 @@
 
 You've probably seen a few ways to shuffle a deck of cards.
 Sometimes the deck is split in half and the halves are switched.
-Sometimes the deck is *smooshed* until it's all mixed up.
+Sometimes the deck is *[smooshed](https://big.assets.huffingtonpost.com/smooshing.gif)* until it's all mixed up.
 But most of the time, a deck of cards is shuffled using a *riffle*.
-// add a link to what the smoosh is?
+
+[aside]
+// Smooshing a deck is arguably more fun.
+// [image style:`{width: '100%'}` src:"static/images/smoosh.gif" /]
+[/aside]
 
 [image style:`{width: '100%'}` src:"static/images/riffle.gif" /]
 
@@ -19,13 +23,19 @@ Here's a question: *how many times do you have to riffle a deck of cards before 
 It's a tricky one, but math has us covered: [you need seven riffles](https://en.wikipedia.org/wiki/Shuffling#Riffle).
 
 [aside]
-[This paper](https://projecteuclid.org/download/pdf_1/euclid.aoap/1177005705) shows a number of other interesting card shuffling results, in all their gory details.
+We can calculate the number of orderings of a deck of cards using the notion of a [permutation](https://en.wikipedia.org/wiki/Permutation).
+To find all arrangements of 52 cards in a deck, we compute **52!**, which happens to be a [really big number](http://www.wolframalpha.com/input/?i=52!).
 [/aside]
 
-Riffle seven times and we will have a sufficiently random ordering of cards, an ordering that has likely never existed before.
+Riffle seven times and we you'll have a sufficiently random ordering of cards, an ordering that has likely [never existed before](http://www.murderousmaths.co.uk/cardperms.htm).
+In other words, it's unlikely you'll ever shuffle two decks the same.
 
-This result appears in a [Numberphile video from 2015](https://www.youtube.com/watch?v=AxJubaijQbI), along with a number of other card shuffling facts.
+The card shuffling result appears in a [Numberphile video from 2015](https://www.youtube.com/watch?v=AxJubaijQbI), along with a number of other card shuffling facts.
 Here's another problem posed in that video: what if instead of a standard riffle using a deck roughly split in half, you were to only riffle *1 card at a time*?
+
+[aside]
+[This paper](https://projecteuclid.org/download/pdf_1/euclid.aoap/1177005705) shows a number of other interesting card shuffling results in all their gory details.
+[/aside]
 
 That is, using a standard deck of 52 cards, in one hand hold hold 51 cards and in the other hold the remaining single card.
 Now riffle these together.
@@ -36,7 +46,7 @@ This is equivalent to taking one card and placing it at random inside of the dec
 *How many single riffles do you have to do in order to have a completely shuffled deck?*
 
 ## Theorem
-You could simulate this in a short program, which we will do towards the end, but first, we can solve for the number of riffles explicitly.
+You could simulate this in a short program, which we will do towards the end, but first we can solve for the number of riffles explicitly.
 
 Consider an ordered deck of cards. 
 [Without loss of generality](https://en.wikipedia.org/wiki/Without_loss_of_generality), let's say the suits are in the following order: [card suit:"S"/], [card suit:"C"/], [card suit:"H"/], [card suit:"D"/].
@@ -45,7 +55,7 @@ So our ordered deck looks like this.
 [cardVis static:"True"/]
 
 The bottom suit is [card suit:"D"/], which means the bottom card of our deck is the King of Diamonds ([card number:"K" suit:"D"/]).
-Now do the following iteration:
+Now perform the following iteration:
 
 >Place the top card of the deck randomly inside the deck
 
@@ -55,8 +65,6 @@ The top card then becomes [card number:"2" suit:"S"/].
 If this procedure is repeated, eventually the top card will be placed at the very bottom of the deck, shifting the [card number:"K" suit:"D"/] to the penultimate position.
 Since every riffled card has a [Equation]\frac{1}{52}[/Equation] chance of moving to any new position in the deck, that means, on average, after about 52 top card riffles, the top card will become the new bottom card.
 
-Now, once the original bottom card, the [card number:"K" suit:"D"/], moves up one position, if we do another top card riffle, there will now be two spots the new top card can be placed that is underneath the [card number:"K" suit:"D"/], i.e., a [Equation]\frac{1}{52}+\frac{1}{52}=\frac{2}{52}[/Equation] chance of going underneath.
-
 [aside]
 **Note:** notice the [card number:"K" suit:"D"/] can only rise in the deck.
 There are two cases:
@@ -64,15 +72,15 @@ There are two cases:
 2. The top card is placed underneath the [card number:"K" suit:"D"/], therefore it rises one position closer to the top.
 [/aside]
 
-Once the [card number:"K" suit:"D"/] moves up one position, upon subsequent riffles there are two spots for a the new top card to be placed underneath it.
+Once the [card number:"K" suit:"D"/] moves up one position, upon subsequent riffles there are now two spots for the new top card to be placed underneath it.
 That means there is now a [Equation]\frac{1}{52}+\frac{1}{52}=\frac{2}{52}[/Equation] chance of a riffled card going underneath the [card number:"K" suit:"D"/].
 
-Continuing this procedure, the original bottom card, the [card number:"K" suit:"D"/], will eventually rise to the top of the deck.
+Continuing this procedure, the original bottom card, the [card number:"K" suit:"D"/], will eventually rise to the top of the deck and be riffled.
 Once this happens, the deck is randomly shuffled: the order we're left with is equally as likely as any other order.
 
 So, how many single card riffles does this take?
-Recall each time a card is placed underneath the [card number:"K" suit:"D"/], out chances of placing another card increases by [Equation]\frac{1}{52}[/Equation].
-We can calculate the number of riffles it would take.
+Recall each time a card is placed underneath the [card number:"K" suit:"D"/], our chances of placing another card increases by [Equation]\frac{1}{52}[/Equation].
+We can calculate the number of riffles this would take.
 
 [Equation display:true]
   \sum_{i=1}^{52} \frac{52}{i} = \frac{52}{1} + \frac{52}{2} + \frac{52}{3} + ... + \frac{52}{52} \approx 235
@@ -88,7 +96,7 @@ Click the **Riffle** button to move the top card somewhere else in the deck rand
 
 Did you see where it went? Click again.
 
-Now click a bunch more really fast.
+Click a bunch more really fast.
 
 Now I could tell you to keep clicking until the highlighted [card number:"K" suit:"D"/] rises to the top, but as we have already shown, that would take about 235 clicks.
 Instead, click the **Riffle (x10)** button to riffle 10 times.
@@ -117,7 +125,7 @@ Once the [card number:"K" suit:"D"/] is the top card, click the **Clear** button
 [positionChart iterVal:iter points:points endPoints:endPoints /]
 
 On average, the [card number:"K" suit:"D"/] will reach the top position somewhere around 235 riffles.
-Since this is the *average* result, so there is a chance your first shuffled deck of cards took less riffles, or many more.
+Since this is the *average* result, there is a chance your first shuffled deck of cards took less riffles (or many more!).
 To try again, click the **Clear** button and get riffling.
 
 // We can simulate this multiple times and verify that on average it takes 235 times.
