@@ -11,10 +11,10 @@ Sometimes the deck is split in half and the halves are switched.
 Sometimes the deck is *[smooshed](https://big.assets.huffingtonpost.com/smooshing.gif)* until it's all mixed up.
 But most of the time, a deck of cards is shuffled using a *riffle*.
 
-[aside]
+// [aside]
 // Smooshing a deck is arguably more fun.
 // [image style:`{width: '100%'}` src:"static/images/smoosh.gif" /]
-[/aside]
+// [/aside]
 
 [image style:`{width: '100%'}` src:"static/images/riffle.gif" /]
 
@@ -37,7 +37,7 @@ Here's another problem posed in that video: what if instead of a standard riffle
 [This paper](https://projecteuclid.org/download/pdf_1/euclid.aoap/1177005705) shows a number of other interesting card shuffling results in all their gory details.
 [/aside]
 
-That is, using a standard deck of 52 cards, in one hand hold hold 51 cards and in the other hold the remaining single card.
+That is, using a standard deck of 52 cards, in one hand hold 51 cards and in the other hold the remaining single card.
 Now riffle these together.
 This is equivalent to taking one card and placing it at random inside of the deck.
 
