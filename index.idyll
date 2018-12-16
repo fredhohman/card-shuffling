@@ -1,4 +1,9 @@
-[meta title:"The Math of Card Shuffling" description:"Riffling from factory order to complete randomness." /]
+[meta
+  title:"The Math of Card Shuffling"
+  description:"Riffling from factory order to complete randomness."
+  shareImageUrl:"https://github.com/fredhohman/card-shuffling/blob/master/static/images/share.png"
+  shareImageWidth:"1600"
+  shareImageHeight:"800" /]
 
 [Header
   title:"The Math of Card Shuffling"
