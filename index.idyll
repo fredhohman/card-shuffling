@@ -90,10 +90,10 @@ Recall each time a card is placed underneath the [card number:"K" suit:"D"/], ou
 We can calculate the number of riffles this would take.
 
 [Equation display:true]
-  \sum_{i=1}^{52} \frac{52}{i} = \frac{52}{1} + \frac{52}{2} + \frac{52}{3} + ... + \frac{52}{52} \approx 235
+  \sum_{i=1}^{52} \frac{52}{i} = \frac{52}{1} + \frac{52}{2} + \frac{52}{3} + ... + \frac{52}{52} \approx 236
 [/Equation]
 
-On average, 235 single card riffles will randomly shuffle a deck of cards.
+On average, 236 single card riffles will randomly shuffle a deck of cards.
 
 ## Let's Riffle
 Equations are great, but let's visualize this!
@@ -105,7 +105,7 @@ Did you see where it went? Click again.
 
 Click a bunch more really fast.
 
-Now I could tell you to keep clicking until the highlighted [card number:"K" suit:"D"/] rises to the top, but as we have already shown, that would take about 235 clicks.
+Now I could tell you to keep clicking until the highlighted [card number:"K" suit:"D"/] rises to the top, but as we have already shown, that would take about 236 clicks.
 Instead, click the **Riffle (x10)** button to riffle 10 times.
 Keep riffling until the [card number:"K" suit:"D"/] moves to the top.
 
@@ -131,11 +131,11 @@ Once the [card number:"K" suit:"D"/] is the top card, click the **Clear** button
 [/aside]
 [positionChart iterVal:iter points:points endPoints:endPoints /]
 
-On average, the [card number:"K" suit:"D"/] will reach the top position somewhere around 235 riffles.
+On average, the [card number:"K" suit:"D"/] will reach the top position somewhere around 236 riffles.
 Since this is the *average* result, there is a chance your first shuffled deck of cards took less riffles (or many more!).
 To try again, click the **Clear** button and get riffling.
 
-// We can simulate this multiple times and verify that on average it takes 235 times.
+// We can simulate this multiple times and verify that on average it takes 236 times.
 
 ### Acknowledgements
 * This article was created using [a href:"https://idyll-lang.org/"]Idyll[/a].
