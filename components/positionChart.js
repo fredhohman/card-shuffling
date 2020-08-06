@@ -18,7 +18,7 @@ let yScale = d3.scaleLinear()
   .domain([52, 1])
   .range([chartHeight - margin.bottom, margin.top])
 
-let lineData = [{ x: 235, y: -1 }, { x: 235, y: 52 }];
+let lineData = [{ x: 236, y: -1 }, { x: 236, y: 52 }];
 let topLineData = [{ x: 0, y: 1 }, { x: 320, y: 1 }];
 
 const expectedLabelInitHeight = 75;
@@ -39,7 +39,7 @@ let annotations = [{
   note: {
     label: "Expected number of riffles before the king reaches the top"
   },
-  data: { iter: 235, position: 15 },
+  data: { iter: 236, position: 15 },
   dy: 90,
   dx: 25,
   connector: { end: "arrow" },
@@ -122,10 +122,10 @@ class positionChart extends D3Component {
       .append("text")
       .attr('id', 'expected-riffle-count-label')
       .attr("y", yScale(1) - 25)
-      .attr("x", xScale(235) + 4)
+      .attr("x", xScale(236) + 4)
       .style("text-anchor", "middle")
-      .attr('transform', function (d) { return 'rotate(270,' + (xScale(235) + 4) + ',' + (yScale(1) - 25) + ')' })
-      .text("235")
+      .attr('transform', function (d) { return 'rotate(270,' + (xScale(236) + 4) + ',' + (yScale(1) - 25) + ')' })
+      .text("236")
       .style('fill', '#f44336')
       .style('font-size', 12)
 
@@ -245,8 +245,8 @@ class positionChart extends D3Component {
       .attr('d', annotationLineGenerator(lineData))
 
     this.svg.select('#expected-riffle-count-label')
-      .attr("x", xScale(235) + 4)
-      .attr('transform', function (d) { return 'rotate(270,' + (xScale(235) + 4) + ',' + (yScale(1) - 25) + ')' })
+      .attr("x", xScale(236) + 4)
+      .attr('transform', function (d) { return 'rotate(270,' + (xScale(236) + 4) + ',' + (yScale(1) - 25) + ')' })
 
 
   }
